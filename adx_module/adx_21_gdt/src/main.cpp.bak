@@ -1,0 +1,265 @@
+
+#include <stdio.h>
+#include <iostream>
+#include "adx_alloc.h"
+#include "adx_json.h"
+#include "pack.pb.h"
+
+using namespace std;
+
+// 01234567890123456789012
+// [11:29:48.889 f700,DBG]
+int buffer_parse(char *str) 
+{
+    if (!str || !(*str))
+        return -1;
+
+    int len = strlen(str);
+    if (len <= 23) return -1;
+
+    if (str[0] == '['
+            && str[19] == 'D'
+            && str[20] == 'B'
+            && str[21] == 'G'
+            && str[22] == ']')
+        return 0;
+    return -1;
+}
+
+string DoubleToString(double arg)
+{
+    char num[64];
+    snprintf(num, 64, "%.2f", arg);
+    return string(num);
+}
+
+string intToString(int arg)
+{
+    char num[64];
+    snprintf(num, 64, "%d", arg);
+    return string(num);
+}
+
+string longToString(long arg)
+{
+    char num[64];
+    snprintf(num, 64, "%ld", arg);
+    return string(num);
+}
+
+int request_parse(adx_pool_t *pool, char *buffer, int size)
+{
+    adx_json_t *root = ADX_JSON_ROOT(pool);
+
+    cout << "=================================================" << endl;
+
+    gdt::adx::BidRequest adx_request;
+    if (!adx_request.ParseFromArray(buffer, size))
+        return -1;
+
+    cout << "id = " << adx_request.id() << endl;
+    ADX_JSON_NODE_ADD(pool, root, ADX_JSON_STRING, "id", adx_request.id().c_str());
+
+    // 广告位LIST
+    adx_json_t *impressions = ADX_JSON_NODE_ADD(pool, root, ADX_JSON_ARRAY, "impressions", NULL);
+    for (int i = 0; i < adx_request.impressions_size(); i++) {
+
+        adx_json_t *node = ADX_JSON_NODE_ADD(pool, impressions, ADX_JSON_OBJECT, NULL, NULL);
+
+        gdt::adx::BidRequest::Impression impression = adx_request.impressions(i);
+        cout << "impression -> id = " << impression.id() << endl; // string
+        cout << "impression -> placement_id = " << impression.placement_id() << endl; // int
+
+        // 广告位
+        adx_json_t *arr = ADX_JSON_NODE_ADD(pool, node, ADX_JSON_ARRAY, "creative_specs", NULL);
+        for (int i = 0; i < impression.creative_specs_size(); i++) {
+            cout << "impression -> creative_specs = " << impression.creative_specs(i) << endl; // int
+            ADX_JSON_NODE_ADD(pool, arr, ADX_JSON_NUMBER, NULL, intToString(impression.creative_specs(i)).c_str());
+        }
+
+        // 低价
+        cout << "impression -> bid_floor = " << impression.bid_floor() << endl; // int
+        ADX_JSON_NODE_ADD(pool, node, ADX_JSON_NUMBER, "bid_floor", intToString(impression.bid_floor()).c_str());
+
+        // 广告位过滤的行业 ID 
+        arr = ADX_JSON_NODE_ADD(pool, node, ADX_JSON_ARRAY, "blocking_industry_id", NULL);
+        for (int i = 0; i < impression.blocking_industry_id_size(); i++) {
+            cout << "impression -> blocking_industry_id = " << impression.blocking_industry_id(i) << endl; // int
+            ADX_JSON_NODE_ADD(pool, arr, ADX_JSON_NUMBER, NULL, longToString(impression.blocking_industry_id(i)).c_str());
+        }
+
+        // 原生广告
+        arr = ADX_JSON_NODE_ADD(pool, node, ADX_JSON_ARRAY, "natives", NULL);
+        for (int i = 0; i < impression.natives_size(); i++) {
+            int required_fields = impression.natives(i).required_fields(); // int
+            cout << "impression -> natives -> required_fields = " << required_fields << endl;
+
+            int type = impression.natives(i).type(); // int
+            cout << "impression -> natives -> type = " << type << endl;
+
+            adx_json_t *obj = ADX_JSON_NODE_ADD(pool, arr, ADX_JSON_OBJECT, NULL, NULL);
+            ADX_JSON_NODE_ADD(pool, obj, ADX_JSON_NUMBER, "required_fields", intToString(required_fields).c_str());
+            ADX_JSON_NODE_ADD(pool, obj, ADX_JSON_NUMBER, "type", intToString(type).c_str());
+        }
+
+        // 废弃
+        arr = ADX_JSON_NODE_ADD(pool, node, ADX_JSON_ARRAY, "contract_code", NULL);
+        for (int i = 0; i < impression.contract_code_size(); i++) {
+            cout << "impression -> contract_code = " << impression.contract_code(i) << endl; // string
+            // ADX_JSON_NODE_ADD(pool, arr, ADX_JSON_NUMBER, NULL, impression.contract_code(i).c_str());
+        }
+
+        // 合同号
+        for (int i = 0; i < impression.deal_ids_size(); i++) {
+            cout << "impression -> deal_ids = " << impression.deal_ids(i) << endl; // string
+        }
+
+        // 广告位支持的素材类型: gif", "jpeg", "png", "swf", "psd", "bmp", "tiff", 
+        // "tiff", "jpc", "jpx", "jb2", "swc", "iff", "wbmp", "xbm", "webp", "flv", "wav", "mp3", "mp4", "avi"
+        // 字段为空时，格式 不做限制。
+        for (int i = 0; i < impression.multimedia_type_white_list_size(); i++) {
+            cout << "impression -> multimedia_type_white_list = " << impression.multimedia_type_white_list(i) << endl; // string
+        }
+
+        // 广告位过滤的关键字
+        for (int i = 0; i < impression.blocking_keyword_size(); i++) {
+            cout << "impression -> blocking_keyword = " << impression.blocking_keyword(i) << endl; // string
+        }
+
+        // 广告位的广告主白名单。 当 advertiser_whitelist 非 空时，该广告位只接受白 名单广告主的广告
+        for (int i = 0; i < impression.advertiser_whitelist_size(); i++) {
+            cout << "impression -> advertiser_whitelist = " << impression.advertiser_whitelist(i) << endl; // string
+        }
+
+        // 广告位过滤的广告主
+        for (int i = 0; i < impression.advertiser_blacklist_size(); i++) {
+            cout << "impression -> advertiser_blacklist = " << impression.advertiser_blacklist(i) << endl; // string
+        }
+
+        // 请求命中的 Pretargeting 配置包 ID
+        for (int i = 0; i < impression.pretargeting_ids_size(); i++) {
+            cout << "impression -> pretargeting_ids = " << impression.pretargeting_ids(i) << endl; // string
+        }
+    }
+
+    // Device
+    gdt::adx::BidRequest::Device device = adx_request.device(); // obj
+
+    // 设备ID
+    cout << "device -> id = " << device.id() << endl; // string
+
+    // 设备类型
+    cout << "device -> device_type = " << device.device_type() << endl; // int
+
+    adx_json_t *node = ADX_JSON_NODE_ADD(pool, root, ADX_JSON_OBJECT, "device", NULL);
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_STRING, "device_id", device.id().c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_NUMBER, "device_type", intToString(device.device_type()).c_str());
+
+    // 操作系统
+    // gdt::adx::BidRequest::OS_ANDROID
+    // gdt::adx::BidRequest::OS_IOS
+    // gdt::adx::BidRequest::OS_WINDOWS
+    cout << "device -> os = " << device.os() << endl; // int
+    cout << "device -> os_version = " << device.os_version() << endl; // string
+    cout << "device -> user_agent = " << device.user_agent() << endl; // string
+    cout << "device -> screen_width = " << device.screen_width() << endl; // int
+    cout << "device -> screen_height = " << device.screen_height() << endl; // int
+    cout << "device -> dpi = " << device.dpi() << endl; // int
+
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_NUMBER, "os", intToString(device.os()).c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_STRING, "os_version", device.os_version().c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_STRING, "user_agent", device.user_agent().c_str());
+
+    // gdt::adx::BidRequest::CARRIER_CHINAMOBILE
+    // gdt::adx::BidRequest::CARRIER_CHINATELECOM
+    // gdt::adx::BidRequest::CARRIER_CHINAUNICOM
+    cout << "device -> carrier = " << device.carrier() << endl; // int
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_NUMBER, "carrier", intToString(device.carrier()).c_str());
+
+    // gdt::adx::BidRequest::CONNECTIONTYPE_2G
+    // gdt::adx::BidRequest::CONNECTIONTYPE_3G
+    // gdt::adx::BidRequest::CONNECTIONTYPE_4G
+    // gdt::adx::BidRequest::CONNECTIONTYPE_WIFI
+    cout << "device -> connection_type = " << device.connection_type() << endl; // int
+    cout << "device -> brand_and_model = " << device.brand_and_model() << endl; // string
+    cout << "device -> language = " << device.language() << endl; // string
+    cout << "device -> idfa = " << device.idfa() << endl; // string
+    cout << "device -> manufacturer = " << device.manufacturer() << endl; // string (设备制造商信息)
+    cout << "device -> android_id = " << device.android_id() << endl; // string
+
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_NUMBER, "connection_type", intToString(device.connection_type()).c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_STRING, "brand_and_model", device.brand_and_model().c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_STRING, "manufacturer", device.manufacturer().c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_STRING, "idfa", device.idfa().c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_STRING, "android_id", device.android_id().c_str());
+
+    // IP/area_code
+    cout << "ip = " << adx_request.ip() << endl; // string
+    cout << "area_code = " << adx_request.area_code() << endl; // int
+    ADX_JSON_NODE_ADD(pool, root, ADX_JSON_STRING, "ip", adx_request.ip().c_str());
+    // ADX_JSON_NODE_ADD(pool, root, ADX_JSON_STRING, "ip", adx_request.ip().c_str());
+
+    // User
+    gdt::adx::BidRequest::User user = adx_request.user();
+    cout << "user -> id = " << user.id() << endl; // string
+    for (int i = 0; i < user.audience_ids_size(); i++) {
+        cout << "user -> audience_ids = " << user.audience_ids(i) << endl; // int
+    }
+
+    // Geo
+    gdt::adx::BidRequest::Geo geo = adx_request.geo();
+    cout << "geo -> latitude = " << geo.latitude() << endl; // int
+    cout << "geo -> longitude = " << geo.longitude() << endl; // int
+    cout << "geo -> accuracy = " << geo.accuracy() << endl; // double
+
+    node = ADX_JSON_NODE_ADD(pool, root, ADX_JSON_OBJECT, "geo", NULL);
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_NUMBER, "latitude", intToString(geo.latitude()).c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_NUMBER, "longitude", intToString(geo.longitude()).c_str());
+    ADX_JSON_NODE_ADD(pool, node, ADX_JSON_NUMBER, "accuracy", DoubleToString(geo.accuracy()).c_str());
+
+    // APP
+    const gdt::adx::BidRequest::App app = adx_request.app();
+    cout << "app -> id = " << app.app_bundle_id() << endl; // int64
+    cout << "app -> app_bundle_id = " << app.app_bundle_id() << endl; // string
+    ADX_JSON_NODE_ADD(pool, root, ADX_JSON_STRING, "app_id", app.app_bundle_id().c_str());
+
+    // support_deep_link
+    cout << "support_deep_link = " << adx_request.support_deep_link() << endl; // bool
+    ADX_JSON_NODE_ADD(pool, root, ADX_JSON_NUMBER, "support_deep_link", intToString(adx_request.support_deep_link()).c_str());
+
+    // adx_json_display(root);
+    fprintf(stdout, "%s\n", adx_json_to_buffer(pool, root)); exit(1);
+    return 0;
+}
+
+
+int main(int argc, char *argv[])
+{
+    char *buffer = (char *)malloc(40000000);
+    FILE *fp = fopen("./gdt.log", "r");
+    int i, size = fread(buffer, 1, 40000000, fp);
+
+    adx_pool_t *pool = adx_pool_create();
+
+    int index = 0;
+    char temp[4096];
+    for (i = 0; i < size; i++) {
+
+        char *str = &buffer[i];
+        if (buffer_parse(str) == 0) {
+
+            if (index > 0) request_parse(pool, temp, index - 1);
+            index = 0;
+            i += 22;
+
+        } else {
+            temp[index++] = *str;
+        }
+    }
+
+    return 0;
+}
+
+
+
+
