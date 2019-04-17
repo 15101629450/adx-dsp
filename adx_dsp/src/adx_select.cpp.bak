@@ -1,0 +1,108 @@
+
+#include "adx_dsp.h"
+
+adx_cache_t *adx_select(adx_cache_t *root, char *key)
+{
+    adx_cache_t *cache = adx_cache_find(root, ADX_CACHE_STR(key));
+    return cache ? cache : adx_cache_find(root, ADX_CACHE_STR(ADX_DUMP_ALL));
+}
+
+adx_cache_t *adx_select(adx_cache_t *root, int key)
+{
+    adx_cache_t *cache = adx_cache_find(root, ADX_CACHE_NUM(key));
+    return cache ? cache : adx_cache_find(root, ADX_CACHE_STR(ADX_DUMP_ALL));
+}
+
+adx_cache_t *adx_select(adx_cache_t *root, const char *section, char *key)
+{
+    adx_cache_t *cache = adx_cache_find(root, ADX_CACHE_STR(section));
+    return cache ? adx_select(cache, key) : NULL;
+}
+
+adx_cache_t *adx_select(adx_cache_t *root, const char *section, int key)
+{
+    adx_cache_t *cache = adx_cache_find(root, ADX_CACHE_STR(section));
+    return cache ? adx_select(cache, key) : NULL;
+}
+
+adx_cache_t *adx_select(adx_cache_t *cache, const char *key)
+{
+    cache = adx_cache_find(cache, ADX_CACHE_STR(key));
+    if (adx_cache_child_check(cache) == 0)
+        return cache;
+    return NULL;
+}
+
+adx_cache_t *adx_select(adx_request_t *r, adx_com_imp *imp, adx_cache_t *cache)
+{
+    switch(imp->type) {
+        case ADX_IMP_NATIVE : cache = adx_select(cache, "icon", imp->icon);
+        case ADX_IMP_BANNER : return adx_select(cache, "imgs", imp->img);
+        case ADX_IMP_VIDEO  : break;
+    }
+
+    return NULL;
+}
+
+adx_cache_t *adx_select(adx_request_t *r, adx_cache_t *maps)
+{
+    adx_list_t *p = NULL;
+    adx_list_for_each(p, &maps->child_list) {
+        adx_cache_t *node = adx_list_entry(p, adx_cache_t, next_list);
+
+        // 判断 频次/黑白名单
+        return node;
+    }
+
+    return NULL;
+}
+
+// adx-> imp-size -> region -> map_id
+adx_cache_t *adx_select(adx_request_t *r, adx_com_imp *imp)
+{
+    adx_cache_t *cache = adx_select(adx_select(adx_select(r, imp,
+                    adx_select(r->element_root, "adx", r->adx)),
+                "regioncode", r->device->ip_code), "map_id");
+    return cache ? adx_select(r, cache) : NULL;
+}
+
+void adx_select_create(adx_request_t *r, adx_com_imp *imp, adx_cache_t *map)
+{
+    adx_select_t *select = (adx_select_t *)adx_alloc(r->pool, sizeof(adx_select_t));
+    if (!select) return;
+
+    select->imp = imp;
+    select->map = adx_cache_find(r->map_list, map->key);
+    select->creative = adx_cache_find(r->creative_list,
+            GET_CACHE_TO_VAL(adx_cache_find(select->map, ADX_CACHE_STR("creative_id"))));
+    adx_cache_t *icon = adx_cache_find(select->creative, ADX_CACHE_STR("icon"));
+    adx_cache_t *imgs = adx_cache_find(select->creative, ADX_CACHE_STR("imgs"));
+    select->icon_path = GET_CACHE_VALUE_STR(icon, imp->icon);
+    select->img_path = GET_CACHE_VALUE_STR(imgs, imp->img);
+    select->price = GET_CACHE_VALUE_NUM(map, "price");
+
+    fprintf(stdout, "price=%d\n", select->price);
+    fprintf(stdout, "map_id=%zd\n", adx_cache_value_to_number(select->map->key));
+    fprintf(stdout, "creative_id=%zd\n", adx_cache_value_to_number(select->creative->key));
+    fprintf(stdout, "creative type=%zd\n", GET_CACHE_VALUE_NUM(select->creative, "type"));
+    fprintf(stdout, "icon_path=%s\n", select->icon_path);
+    fprintf(stdout, "img_path=%s\n", select->img_path);
+
+    adx_template(r, select);
+    adx_list_add(&r->select, &select->next);
+}
+
+int adx_select(adx_request_t *r)
+{
+    adx_list_t *p = NULL;
+    adx_list_for_each(p, &r->imps) {
+        adx_com_imp *imp = (adx_com_imp *)p;
+        adx_cache_t *node = adx_select(r, imp);
+        adx_select_create(r, imp, node);
+    }
+
+    return 0;
+}
+
+
+

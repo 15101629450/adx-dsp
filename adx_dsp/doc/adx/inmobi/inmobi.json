@@ -1,0 +1,139 @@
+{
+	"id": "c2520367-0161-1000-f955-009557c700b0", // bid
+	"imp": // 广告位LIST
+	[
+
+	// banner广告
+	{
+		"id": "1", // 展现位ID
+		"banner": // banner广告
+		{
+			"id": "1" ,
+			"format":[], // 尺寸数组 如无此字段使用w/h 
+			"w": 320, // 宽度
+			"h": 50, // 高度
+			"battr": [1, 2, 3, 6, 8, 9, 10, 14, 17, 7], // 屏蔽广告素材
+			"pos": 1, // 广告在屏幕位置
+			"mimes": ["image/jpeg", "image/gif", "image/png"], // 支持的素材类型
+			"api": [3, 5] // 支持的API框架列表
+		},
+
+		"instl": 0, // 0:??? 1:插屏/全屏
+		"bidfloor": 0.063045, // 底价
+		"bidfloorcur": "CNY", // 货币类型
+		"secure": 0, // http链接: 0:不安全 1:安全 
+		"ext": 
+		{
+			"dpl": true, // ???
+			"dplRecommended": false // ???
+		}
+	},
+
+	// 原生广告
+	{
+		"id": "1", // 展现位ID
+		"native": // 原生广告
+		{  
+			"requestobj": 
+			{
+				"layout": 3,  // 布局id
+				"plcmtcnt": 1, // 此布局中的相同展示位置的数量。
+				"seq": 0,
+				"assets": // ？？？
+					[
+						{
+							"id": 1,
+							"required": 0, // ？？？
+							"data": {"type": 12} // ？？？
+						},
+
+						{
+							"id": 2,
+							"required": 1, // ？？？
+							"img":  // ？？？
+							{
+								"type": 3, // ？？？
+								"wmin": 600, // ？？？
+								"hmin": 313, // ？？？
+								"ext": 
+								{
+									"ar": 1.91, // 宽高比
+									"arTolerance": 10.0 // 宽高比误差 
+								}
+							}
+						}
+					]
+				},
+			
+			"ver": "1" // 出价版本
+		},
+		
+		"instl": 0, // 0:??? 1:插屏/全屏
+		"bidfloor": 0.063045, // 底价
+		"bidfloorcur": "CNY", // 货币类型
+    	"secure": 0, // http链接: 0:不安全 1:安全 
+		"ext": 
+		{
+			"dpl": true, // ???
+			"dplRecommended": false // ???
+		}
+	}
+	],
+	
+
+	"app": 
+	{
+		"id": "ca6a8345c039491d9c021a050ba0c69f", // app ID
+		"name": "捕鱼达人-ios-Nat banner", // app 名字
+		"bundle": "520086631", // IDFA/android_id
+		"storeurl": "https://itunes.apple.com/cn/app/id520086631?mt=8", // 商店下载地址
+		"cat": ["IAB10-2", "IAB9-30", "IAB1", "IAB19-29"], // app 分类
+		"ext": 
+		{
+			"fs": "0" // app 评分
+		}
+	},
+
+
+	"device": {
+		"geo":  // 地理位置
+		{
+			"lat": 34.758,	 // 纬度 南->北 (-90到90)
+			"lon": 113.6654, // 经度 西->东 (-180到180)
+			"type": 2,			// Source of location data; recommended when passing lat/lon. Refer below table.
+			"country": "CHN"	// Country code using ISO-3166-1-alpha-3.
+    
+		},
+
+		"dnt": 0, // 浏览器header设置Track 0:跟踪 1:不跟踪
+		"lmt": 0, // IOS/Android设置Track 0:跟踪 1:不跟踪
+		"ip": "61.158.146.111", // IP地址
+		"devicetype": 4, // 
+		"make": "Apple",
+		"model": "iPhone (undetected)", // 设备型号
+		"os": "iOS", // 操作系统
+		"osv": "11.2", // 操作系统版本
+		"pxratio": 1.0, // 设备像素比例
+		"connectiontype": 2, // 网络类型
+		"ifa": "3D3F8F8F-E00E-41D4-8CB5-AB8B774C59AF", // 设备ID
+		"ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_2 like Mac OS X)", // UA		
+
+		"ext": // 设备ID原文
+		{
+			"idfamd5": "39a57383c310e75c4022feb20071bf5d", // IDFA 原文
+			"idfa": "3D3F8F8F-E00E-41D4-8CB5-AB8B774C59AF", // IOS6 for UDID
+			"idfasha1": "15c8d5abe21d283a81f2db8de455e5d6ba2db0e8", // IOS6 for UDID
+			"gpid":"" // android ID
+		}
+	},
+	
+
+	"at": 2, // 1:第一次出价 2:第二次出价
+	"tmax": 200, // 交换允许的最长时间
+	"cur": ["USD", "CNY"], // 货币类型
+	"bcat": ["IAB11-1", "IAB11-2"], // IAB阻止的广告
+	"badv": [] // 广告客户阻止的广告
+}
+
+
+

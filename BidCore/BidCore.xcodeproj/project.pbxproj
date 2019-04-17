@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4209930D2005E9BA000E5F0C /* ad_cache_dump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420992EF2005E9BA000E5F0C /* ad_cache_dump.cpp */; };
+		4209930E2005E9BA000E5F0C /* ad_cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420992F02005E9BA000E5F0C /* ad_cache.cpp */; };
+		4209930F2005E9BA000E5F0C /* ad_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420992F22005E9BA000E5F0C /* ad_control.cpp */; };
+		420993102005E9BA000E5F0C /* ad_element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420992F42005E9BA000E5F0C /* ad_element.cpp */; };
+		420993112005E9BA000E5F0C /* ad_optimize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420992F62005E9BA000E5F0C /* ad_optimize.cpp */; };
+		420993122005E9BA000E5F0C /* bid_conf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420992FA2005E9BA000E5F0C /* bid_conf.cpp */; };
+		420993132005E9BA000E5F0C /* bidbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420992FC2005E9BA000E5F0C /* bidbase.cpp */; };
+		420993142005E9BA000E5F0C /* filter_assist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993022005E9BA000E5F0C /* filter_assist.cpp */; };
+		420993152005E9BA000E5F0C /* local_log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993042005E9BA000E5F0C /* local_log.cpp */; };
+		420993162005E9BA000E5F0C /* req_common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993062005E9BA000E5F0C /* req_common.cpp */; };
+		420993172005E9BA000E5F0C /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209930A2005E9BA000E5F0C /* util.cpp */; };
+		420993342005E9F8000E5F0C /* algo_aes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209931B2005E9F8000E5F0C /* algo_aes.cpp */; };
+		420993352005E9F8000E5F0C /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 4209931D2005E9F8000E5F0C /* base64.c */; };
+		420993362005E9F8000E5F0C /* confoperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209931F2005E9F8000E5F0C /* confoperation.cpp */; };
+		420993372005E9F8000E5F0C /* geohash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993222005E9F8000E5F0C /* geohash.cpp */; };
+		420993382005E9F8000E5F0C /* getlocation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993242005E9F8000E5F0C /* getlocation.cpp */; };
+		420993392005E9F8000E5F0C /* json_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993262005E9F8000E5F0C /* json_util.cpp */; };
+		4209933A2005E9F8000E5F0C /* json.c in Sources */ = {isa = PBXBuildFile; fileRef = 420993282005E9F8000E5F0C /* json.c */; };
+		4209933B2005E9F8000E5F0C /* kafka_produce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209932A2005E9F8000E5F0C /* kafka_produce.cpp */; };
+		4209933C2005E9F8000E5F0C /* tcp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209932C2005E9F8000E5F0C /* tcp.cpp */; };
+		4209933D2005E9F8000E5F0C /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209932E2005E9F8000E5F0C /* thread.cpp */; };
+		4209933E2005E9F8000E5F0C /* url_endecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993302005E9F8000E5F0C /* url_endecode.cpp */; };
+		4209933F2005E9F8000E5F0C /* util_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993322005E9F8000E5F0C /* util_base.cpp */; };
+		420993482005EA06000E5F0C /* bid_info.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 420993402005EA06000E5F0C /* bid_info.pb.cc */; };
+		420993492005EA06000E5F0C /* detail_info.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 420993432005EA06000E5F0C /* detail_info.pb.cc */; };
+		4209934A2005EA06000E5F0C /* server_log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993462005EA06000E5F0C /* server_log.cpp */; };
+		4209935A2005EA15000E5F0C /* xRedisClient_connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209934C2005EA15000E5F0C /* xRedisClient_connection.cpp */; };
+		4209935B2005EA15000E5F0C /* xRedisClient_hashs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209934D2005EA15000E5F0C /* xRedisClient_hashs.cpp */; };
+		4209935C2005EA15000E5F0C /* xRedisClient_keys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209934E2005EA15000E5F0C /* xRedisClient_keys.cpp */; };
+		4209935D2005EA15000E5F0C /* xRedisClient_lists.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4209934F2005EA15000E5F0C /* xRedisClient_lists.cpp */; };
+		4209935E2005EA15000E5F0C /* xRedisClient_pubsub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993502005EA15000E5F0C /* xRedisClient_pubsub.cpp */; };
+		4209935F2005EA15000E5F0C /* xRedisClient_sets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993512005EA15000E5F0C /* xRedisClient_sets.cpp */; };
+		420993602005EA15000E5F0C /* xRedisClient_sortedsets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993522005EA15000E5F0C /* xRedisClient_sortedsets.cpp */; };
+		420993612005EA15000E5F0C /* xRedisClient_strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993532005EA15000E5F0C /* xRedisClient_strings.cpp */; };
+		420993622005EA15000E5F0C /* xRedisClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993542005EA15000E5F0C /* xRedisClient.cpp */; };
+		420993632005EA15000E5F0C /* xRedisClusterClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993562005EA15000E5F0C /* xRedisClusterClient.cpp */; };
+		420993642005EA15000E5F0C /* xRedisPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420993582005EA15000E5F0C /* xRedisPool.cpp */; };
+		42A34FA7205221CA0038B958 /* inmobi_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42A34FA1205221CA0038B958 /* inmobi_context.cpp */; };
+		42A34FA8205221CA0038B958 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42A34FA2205221CA0038B958 /* main.cpp */; };
+		42A34FA9205221CA0038B958 /* inmobi_bid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42A34FA4205221CA0038B958 /* inmobi_bid.cpp */; };
+		42A34FAA205221CA0038B958 /* inmobi_adapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42A34FA6205221CA0038B958 /* inmobi_adapter.cpp */; };
+		42B389CC208AEFFB00D71743 /* baidu_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42B389C9208AEFFB00D71743 /* baidu_context.cpp */; };
+		42B389CD208AEFFB00D71743 /* baidu_bid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42B389CB208AEFFB00D71743 /* baidu_bid.cpp */; };
+		42B389CF208AF00700D71743 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42B389CE208AF00700D71743 /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		420992E12005E941000E5F0C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		420992E32005E941000E5F0C /* BidCore */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BidCore; sourceTree = BUILT_PRODUCTS_DIR; };
+		420992EF2005E9BA000E5F0C /* ad_cache_dump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_cache_dump.cpp; path = common/ad_cache_dump.cpp; sourceTree = "<group>"; };
+		420992F02005E9BA000E5F0C /* ad_cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_cache.cpp; path = common/ad_cache.cpp; sourceTree = "<group>"; };
+		420992F12005E9BA000E5F0C /* ad_cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_cache.h; path = common/ad_cache.h; sourceTree = "<group>"; };
+		420992F22005E9BA000E5F0C /* ad_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_control.cpp; path = common/ad_control.cpp; sourceTree = "<group>"; };
+		420992F32005E9BA000E5F0C /* ad_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_control.h; path = common/ad_control.h; sourceTree = "<group>"; };
+		420992F42005E9BA000E5F0C /* ad_element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_element.cpp; path = common/ad_element.cpp; sourceTree = "<group>"; };
+		420992F52005E9BA000E5F0C /* ad_element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_element.h; path = common/ad_element.h; sourceTree = "<group>"; };
+		420992F62005E9BA000E5F0C /* ad_optimize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ad_optimize.cpp; path = common/ad_optimize.cpp; sourceTree = "<group>"; };
+		420992F72005E9BA000E5F0C /* ad_optimize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ad_optimize.h; path = common/ad_optimize.h; sourceTree = "<group>"; };
+		420992FA2005E9BA000E5F0C /* bid_conf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bid_conf.cpp; path = common/bid_conf.cpp; sourceTree = "<group>"; };
+		420992FB2005E9BA000E5F0C /* bid_conf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bid_conf.h; path = common/bid_conf.h; sourceTree = "<group>"; };
+		420992FC2005E9BA000E5F0C /* bidbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bidbase.cpp; path = common/bidbase.cpp; sourceTree = "<group>"; };
+		420992FD2005E9BA000E5F0C /* bidbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bidbase.h; path = common/bidbase.h; sourceTree = "<group>"; };
+		420993012005E9BA000E5F0C /* errorcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = errorcode.h; path = common/errorcode.h; sourceTree = "<group>"; };
+		420993022005E9BA000E5F0C /* filter_assist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filter_assist.cpp; path = common/filter_assist.cpp; sourceTree = "<group>"; };
+		420993032005E9BA000E5F0C /* filter_assist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = filter_assist.h; path = common/filter_assist.h; sourceTree = "<group>"; };
+		420993042005E9BA000E5F0C /* local_log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = local_log.cpp; path = common/local_log.cpp; sourceTree = "<group>"; };
+		420993052005E9BA000E5F0C /* local_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = local_log.h; path = common/local_log.h; sourceTree = "<group>"; };
+		420993062005E9BA000E5F0C /* req_common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = req_common.cpp; path = common/req_common.cpp; sourceTree = "<group>"; };
+		420993072005E9BA000E5F0C /* req_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = req_common.h; path = common/req_common.h; sourceTree = "<group>"; };
+		420993092005E9BA000E5F0C /* type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = type.h; path = common/type.h; sourceTree = "<group>"; };
+		4209930A2005E9BA000E5F0C /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util.cpp; path = common/util.cpp; sourceTree = "<group>"; };
+		4209930B2005E9BA000E5F0C /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util.h; path = common/util.h; sourceTree = "<group>"; };
+		4209931B2005E9F8000E5F0C /* algo_aes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = algo_aes.cpp; path = common/baselib/algo_aes.cpp; sourceTree = "<group>"; };
+		4209931C2005E9F8000E5F0C /* algo_aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = algo_aes.h; path = common/baselib/algo_aes.h; sourceTree = "<group>"; };
+		4209931D2005E9F8000E5F0C /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = common/baselib/base64.c; sourceTree = "<group>"; };
+		4209931E2005E9F8000E5F0C /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = common/baselib/base64.h; sourceTree = "<group>"; };
+		4209931F2005E9F8000E5F0C /* confoperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = confoperation.cpp; path = common/baselib/confoperation.cpp; sourceTree = "<group>"; };
+		420993202005E9F8000E5F0C /* confoperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = confoperation.h; path = common/baselib/confoperation.h; sourceTree = "<group>"; };
+		420993212005E9F8000E5F0C /* double_cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = double_cache.h; path = common/baselib/double_cache.h; sourceTree = "<group>"; };
+		420993222005E9F8000E5F0C /* geohash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = geohash.cpp; path = common/baselib/geohash.cpp; sourceTree = "<group>"; };
+		420993232005E9F8000E5F0C /* geohash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = geohash.h; path = common/baselib/geohash.h; sourceTree = "<group>"; };
+		420993242005E9F8000E5F0C /* getlocation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = getlocation.cpp; path = common/baselib/getlocation.cpp; sourceTree = "<group>"; };
+		420993252005E9F8000E5F0C /* getlocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = getlocation.h; path = common/baselib/getlocation.h; sourceTree = "<group>"; };
+		420993262005E9F8000E5F0C /* json_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json_util.cpp; path = common/baselib/json_util.cpp; sourceTree = "<group>"; };
+		420993272005E9F8000E5F0C /* json_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json_util.h; path = common/baselib/json_util.h; sourceTree = "<group>"; };
+		420993282005E9F8000E5F0C /* json.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = json.c; path = common/baselib/json.c; sourceTree = "<group>"; };
+		420993292005E9F8000E5F0C /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = common/baselib/json.h; sourceTree = "<group>"; };
+		4209932A2005E9F8000E5F0C /* kafka_produce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = kafka_produce.cpp; path = common/baselib/kafka_produce.cpp; sourceTree = "<group>"; };
+		4209932B2005E9F8000E5F0C /* kafka_produce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kafka_produce.h; path = common/baselib/kafka_produce.h; sourceTree = "<group>"; };
+		4209932C2005E9F8000E5F0C /* tcp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tcp.cpp; path = common/baselib/tcp.cpp; sourceTree = "<group>"; };
+		4209932D2005E9F8000E5F0C /* tcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tcp.h; path = common/baselib/tcp.h; sourceTree = "<group>"; };
+		4209932E2005E9F8000E5F0C /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = common/baselib/thread.cpp; sourceTree = "<group>"; };
+		4209932F2005E9F8000E5F0C /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread.h; path = common/baselib/thread.h; sourceTree = "<group>"; };
+		420993302005E9F8000E5F0C /* url_endecode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = url_endecode.cpp; path = common/baselib/url_endecode.cpp; sourceTree = "<group>"; };
+		420993312005E9F8000E5F0C /* url_endecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = url_endecode.h; path = common/baselib/url_endecode.h; sourceTree = "<group>"; };
+		420993322005E9F8000E5F0C /* util_base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = util_base.cpp; path = common/baselib/util_base.cpp; sourceTree = "<group>"; };
+		420993332005E9F8000E5F0C /* util_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_base.h; path = common/baselib/util_base.h; sourceTree = "<group>"; };
+		420993402005EA06000E5F0C /* bid_info.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bid_info.pb.cc; path = common/serverLog/bid_info.pb.cc; sourceTree = "<group>"; };
+		420993412005EA06000E5F0C /* bid_info.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bid_info.pb.h; path = common/serverLog/bid_info.pb.h; sourceTree = "<group>"; };
+		420993422005EA06000E5F0C /* bid_info.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bid_info.proto; path = common/serverLog/bid_info.proto; sourceTree = "<group>"; };
+		420993432005EA06000E5F0C /* detail_info.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = detail_info.pb.cc; path = common/serverLog/detail_info.pb.cc; sourceTree = "<group>"; };
+		420993442005EA06000E5F0C /* detail_info.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = detail_info.pb.h; path = common/serverLog/detail_info.pb.h; sourceTree = "<group>"; };
+		420993452005EA06000E5F0C /* detail_info.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = detail_info.proto; path = common/serverLog/detail_info.proto; sourceTree = "<group>"; };
+		420993462005EA06000E5F0C /* server_log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = server_log.cpp; path = common/serverLog/server_log.cpp; sourceTree = "<group>"; };
+		420993472005EA06000E5F0C /* server_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = server_log.h; path = common/serverLog/server_log.h; sourceTree = "<group>"; };
+		4209934B2005EA15000E5F0C /* xLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xLock.h; path = common/xRedis/xLock.h; sourceTree = "<group>"; };
+		4209934C2005EA15000E5F0C /* xRedisClient_connection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient_connection.cpp; path = common/xRedis/xRedisClient_connection.cpp; sourceTree = "<group>"; };
+		4209934D2005EA15000E5F0C /* xRedisClient_hashs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient_hashs.cpp; path = common/xRedis/xRedisClient_hashs.cpp; sourceTree = "<group>"; };
+		4209934E2005EA15000E5F0C /* xRedisClient_keys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient_keys.cpp; path = common/xRedis/xRedisClient_keys.cpp; sourceTree = "<group>"; };
+		4209934F2005EA15000E5F0C /* xRedisClient_lists.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient_lists.cpp; path = common/xRedis/xRedisClient_lists.cpp; sourceTree = "<group>"; };
+		420993502005EA15000E5F0C /* xRedisClient_pubsub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient_pubsub.cpp; path = common/xRedis/xRedisClient_pubsub.cpp; sourceTree = "<group>"; };
+		420993512005EA15000E5F0C /* xRedisClient_sets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient_sets.cpp; path = common/xRedis/xRedisClient_sets.cpp; sourceTree = "<group>"; };
+		420993522005EA15000E5F0C /* xRedisClient_sortedsets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient_sortedsets.cpp; path = common/xRedis/xRedisClient_sortedsets.cpp; sourceTree = "<group>"; };
+		420993532005EA15000E5F0C /* xRedisClient_strings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient_strings.cpp; path = common/xRedis/xRedisClient_strings.cpp; sourceTree = "<group>"; };
+		420993542005EA15000E5F0C /* xRedisClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClient.cpp; path = common/xRedis/xRedisClient.cpp; sourceTree = "<group>"; };
+		420993552005EA15000E5F0C /* xRedisClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xRedisClient.h; path = common/xRedis/xRedisClient.h; sourceTree = "<group>"; };
+		420993562005EA15000E5F0C /* xRedisClusterClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisClusterClient.cpp; path = common/xRedis/xRedisClusterClient.cpp; sourceTree = "<group>"; };
+		420993572005EA15000E5F0C /* xRedisClusterClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xRedisClusterClient.h; path = common/xRedis/xRedisClusterClient.h; sourceTree = "<group>"; };
+		420993582005EA15000E5F0C /* xRedisPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xRedisPool.cpp; path = common/xRedis/xRedisPool.cpp; sourceTree = "<group>"; };
+		420993592005EA15000E5F0C /* xRedisPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xRedisPool.h; path = common/xRedis/xRedisPool.h; sourceTree = "<group>"; };
+		42A34FA0205221CA0038B958 /* inmobi_bid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inmobi_bid.h; path = bid/inmobi/inmobi_bid.h; sourceTree = "<group>"; };
+		42A34FA1205221CA0038B958 /* inmobi_context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inmobi_context.cpp; path = bid/inmobi/inmobi_context.cpp; sourceTree = "<group>"; };
+		42A34FA2205221CA0038B958 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = bid/inmobi/main.cpp; sourceTree = "<group>"; };
+		42A34FA3205221CA0038B958 /* inmobi_adapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inmobi_adapter.h; path = bid/inmobi/inmobi_adapter.h; sourceTree = "<group>"; };
+		42A34FA4205221CA0038B958 /* inmobi_bid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inmobi_bid.cpp; path = bid/inmobi/inmobi_bid.cpp; sourceTree = "<group>"; };
+		42A34FA5205221CA0038B958 /* inmobi_context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inmobi_context.h; path = bid/inmobi/inmobi_context.h; sourceTree = "<group>"; };
+		42A34FA6205221CA0038B958 /* inmobi_adapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inmobi_adapter.cpp; path = bid/inmobi/inmobi_adapter.cpp; sourceTree = "<group>"; };
+		42B389C8208AEFFB00D71743 /* baidu_bid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baidu_bid.h; path = bid/baidu/baidu_bid.h; sourceTree = "<group>"; };
+		42B389C9208AEFFB00D71743 /* baidu_context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = baidu_context.cpp; path = bid/baidu/baidu_context.cpp; sourceTree = "<group>"; };
+		42B389CA208AEFFB00D71743 /* baidu_context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baidu_context.h; path = bid/baidu/baidu_context.h; sourceTree = "<group>"; };
+		42B389CB208AEFFB00D71743 /* baidu_bid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = baidu_bid.cpp; path = bid/baidu/baidu_bid.cpp; sourceTree = "<group>"; };
+		42B389CE208AF00700D71743 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = bid/baidu/main.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		420992E02005E941000E5F0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		420992DA2005E941000E5F0C = {
+			isa = PBXGroup;
+			children = (
+				420992EE2005E9A7000E5F0C /* bid */,
+				420992ED2005E98D000E5F0C /* common */,
+				420992E42005E941000E5F0C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		420992E42005E941000E5F0C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				420992E32005E941000E5F0C /* BidCore */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		420992ED2005E98D000E5F0C /* common */ = {
+			isa = PBXGroup;
+			children = (
+				4209931A2005E9D2000E5F0C /* baselib */,
+				420993192005E9CF000E5F0C /* serverLog */,
+				420993182005E9CC000E5F0C /* xRedis */,
+				420992EF2005E9BA000E5F0C /* ad_cache_dump.cpp */,
+				420992F02005E9BA000E5F0C /* ad_cache.cpp */,
+				420992F12005E9BA000E5F0C /* ad_cache.h */,
+				420992F22005E9BA000E5F0C /* ad_control.cpp */,
+				420992F32005E9BA000E5F0C /* ad_control.h */,
+				420992F42005E9BA000E5F0C /* ad_element.cpp */,
+				420992F52005E9BA000E5F0C /* ad_element.h */,
+				420992F62005E9BA000E5F0C /* ad_optimize.cpp */,
+				420992F72005E9BA000E5F0C /* ad_optimize.h */,
+				420992FA2005E9BA000E5F0C /* bid_conf.cpp */,
+				420992FB2005E9BA000E5F0C /* bid_conf.h */,
+				420992FC2005E9BA000E5F0C /* bidbase.cpp */,
+				420992FD2005E9BA000E5F0C /* bidbase.h */,
+				420993012005E9BA000E5F0C /* errorcode.h */,
+				420993022005E9BA000E5F0C /* filter_assist.cpp */,
+				420993032005E9BA000E5F0C /* filter_assist.h */,
+				420993042005E9BA000E5F0C /* local_log.cpp */,
+				420993052005E9BA000E5F0C /* local_log.h */,
+				420993062005E9BA000E5F0C /* req_common.cpp */,
+				420993072005E9BA000E5F0C /* req_common.h */,
+				420993092005E9BA000E5F0C /* type.h */,
+				4209930A2005E9BA000E5F0C /* util.cpp */,
+				4209930B2005E9BA000E5F0C /* util.h */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+		420992EE2005E9A7000E5F0C /* bid */ = {
+			isa = PBXGroup;
+			children = (
+				42B389C7208AEFE000D71743 /* baidu */,
+				42A34F9F2052216D0038B958 /* inmobi */,
+			);
+			name = bid;
+			sourceTree = "<group>";
+		};
+		420993182005E9CC000E5F0C /* xRedis */ = {
+			isa = PBXGroup;
+			children = (
+				4209934B2005EA15000E5F0C /* xLock.h */,
+				4209934C2005EA15000E5F0C /* xRedisClient_connection.cpp */,
+				4209934D2005EA15000E5F0C /* xRedisClient_hashs.cpp */,
+				4209934E2005EA15000E5F0C /* xRedisClient_keys.cpp */,
+				4209934F2005EA15000E5F0C /* xRedisClient_lists.cpp */,
+				420993502005EA15000E5F0C /* xRedisClient_pubsub.cpp */,
+				420993512005EA15000E5F0C /* xRedisClient_sets.cpp */,
+				420993522005EA15000E5F0C /* xRedisClient_sortedsets.cpp */,
+				420993532005EA15000E5F0C /* xRedisClient_strings.cpp */,
+				420993542005EA15000E5F0C /* xRedisClient.cpp */,
+				420993552005EA15000E5F0C /* xRedisClient.h */,
+				420993562005EA15000E5F0C /* xRedisClusterClient.cpp */,
+				420993572005EA15000E5F0C /* xRedisClusterClient.h */,
+				420993582005EA15000E5F0C /* xRedisPool.cpp */,
+				420993592005EA15000E5F0C /* xRedisPool.h */,
+			);
+			name = xRedis;
+			sourceTree = "<group>";
+		};
+		420993192005E9CF000E5F0C /* serverLog */ = {
+			isa = PBXGroup;
+			children = (
+				420993402005EA06000E5F0C /* bid_info.pb.cc */,
+				420993412005EA06000E5F0C /* bid_info.pb.h */,
+				420993422005EA06000E5F0C /* bid_info.proto */,
+				420993432005EA06000E5F0C /* detail_info.pb.cc */,
+				420993442005EA06000E5F0C /* detail_info.pb.h */,
+				420993452005EA06000E5F0C /* detail_info.proto */,
+				420993462005EA06000E5F0C /* server_log.cpp */,
+				420993472005EA06000E5F0C /* server_log.h */,
+			);
+			name = serverLog;
+			sourceTree = "<group>";
+		};
+		4209931A2005E9D2000E5F0C /* baselib */ = {
+			isa = PBXGroup;
+			children = (
+				4209931B2005E9F8000E5F0C /* algo_aes.cpp */,
+				4209931C2005E9F8000E5F0C /* algo_aes.h */,
+				4209931D2005E9F8000E5F0C /* base64.c */,
+				4209931E2005E9F8000E5F0C /* base64.h */,
+				4209931F2005E9F8000E5F0C /* confoperation.cpp */,
+				420993202005E9F8000E5F0C /* confoperation.h */,
+				420993212005E9F8000E5F0C /* double_cache.h */,
+				420993222005E9F8000E5F0C /* geohash.cpp */,
+				420993232005E9F8000E5F0C /* geohash.h */,
+				420993242005E9F8000E5F0C /* getlocation.cpp */,
+				420993252005E9F8000E5F0C /* getlocation.h */,
+				420993262005E9F8000E5F0C /* json_util.cpp */,
+				420993272005E9F8000E5F0C /* json_util.h */,
+				420993282005E9F8000E5F0C /* json.c */,
+				420993292005E9F8000E5F0C /* json.h */,
+				4209932A2005E9F8000E5F0C /* kafka_produce.cpp */,
+				4209932B2005E9F8000E5F0C /* kafka_produce.h */,
+				4209932C2005E9F8000E5F0C /* tcp.cpp */,
+				4209932D2005E9F8000E5F0C /* tcp.h */,
+				4209932E2005E9F8000E5F0C /* thread.cpp */,
+				4209932F2005E9F8000E5F0C /* thread.h */,
+				420993302005E9F8000E5F0C /* url_endecode.cpp */,
+				420993312005E9F8000E5F0C /* url_endecode.h */,
+				420993322005E9F8000E5F0C /* util_base.cpp */,
+				420993332005E9F8000E5F0C /* util_base.h */,
+			);
+			name = baselib;
+			sourceTree = "<group>";
+		};
+		42A34F9F2052216D0038B958 /* inmobi */ = {
+			isa = PBXGroup;
+			children = (
+				42A34FA6205221CA0038B958 /* inmobi_adapter.cpp */,
+				42A34FA3205221CA0038B958 /* inmobi_adapter.h */,
+				42A34FA4205221CA0038B958 /* inmobi_bid.cpp */,
+				42A34FA0205221CA0038B958 /* inmobi_bid.h */,
+				42A34FA1205221CA0038B958 /* inmobi_context.cpp */,
+				42A34FA5205221CA0038B958 /* inmobi_context.h */,
+				42A34FA2205221CA0038B958 /* main.cpp */,
+			);
+			name = inmobi;
+			sourceTree = "<group>";
+		};
+		42B389C7208AEFE000D71743 /* baidu */ = {
+			isa = PBXGroup;
+			children = (
+				42B389CE208AF00700D71743 /* main.cpp */,
+				42B389CB208AEFFB00D71743 /* baidu_bid.cpp */,
+				42B389C8208AEFFB00D71743 /* baidu_bid.h */,
+				42B389C9208AEFFB00D71743 /* baidu_context.cpp */,
+				42B389CA208AEFFB00D71743 /* baidu_context.h */,
+			);
+			name = baidu;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		420992E22005E941000E5F0C /* BidCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 420992EA2005E941000E5F0C /* Build configuration list for PBXNativeTarget "BidCore" */;
+			buildPhases = (
+				420992DF2005E941000E5F0C /* Sources */,
+				420992E02005E941000E5F0C /* Frameworks */,
+				420992E12005E941000E5F0C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BidCore;
+			productName = BidCore;
+			productReference = 420992E32005E941000E5F0C /* BidCore */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		420992DB2005E941000E5F0C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "李春光";
+				TargetAttributes = {
+					420992E22005E941000E5F0C = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 420992DE2005E941000E5F0C /* Build configuration list for PBXProject "BidCore" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 420992DA2005E941000E5F0C;
+			productRefGroup = 420992E42005E941000E5F0C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				420992E22005E941000E5F0C /* BidCore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		420992DF2005E941000E5F0C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4209930D2005E9BA000E5F0C /* ad_cache_dump.cpp in Sources */,
+				4209933B2005E9F8000E5F0C /* kafka_produce.cpp in Sources */,
+				420993642005EA15000E5F0C /* xRedisPool.cpp in Sources */,
+				420993392005E9F8000E5F0C /* json_util.cpp in Sources */,
+				4209935E2005EA15000E5F0C /* xRedisClient_pubsub.cpp in Sources */,
+				42B389CC208AEFFB00D71743 /* baidu_context.cpp in Sources */,
+				420993632005EA15000E5F0C /* xRedisClusterClient.cpp in Sources */,
+				4209935B2005EA15000E5F0C /* xRedisClient_hashs.cpp in Sources */,
+				42B389CD208AEFFB00D71743 /* baidu_bid.cpp in Sources */,
+				420993102005E9BA000E5F0C /* ad_element.cpp in Sources */,
+				4209935D2005EA15000E5F0C /* xRedisClient_lists.cpp in Sources */,
+				420993152005E9BA000E5F0C /* local_log.cpp in Sources */,
+				4209930E2005E9BA000E5F0C /* ad_cache.cpp in Sources */,
+				42A34FA9205221CA0038B958 /* inmobi_bid.cpp in Sources */,
+				420993342005E9F8000E5F0C /* algo_aes.cpp in Sources */,
+				420993362005E9F8000E5F0C /* confoperation.cpp in Sources */,
+				420993172005E9BA000E5F0C /* util.cpp in Sources */,
+				4209934A2005EA06000E5F0C /* server_log.cpp in Sources */,
+				42A34FA7205221CA0038B958 /* inmobi_context.cpp in Sources */,
+				420993112005E9BA000E5F0C /* ad_optimize.cpp in Sources */,
+				420993372005E9F8000E5F0C /* geohash.cpp in Sources */,
+				42A34FAA205221CA0038B958 /* inmobi_adapter.cpp in Sources */,
+				420993492005EA06000E5F0C /* detail_info.pb.cc in Sources */,
+				4209933C2005E9F8000E5F0C /* tcp.cpp in Sources */,
+				4209935A2005EA15000E5F0C /* xRedisClient_connection.cpp in Sources */,
+				4209935F2005EA15000E5F0C /* xRedisClient_sets.cpp in Sources */,
+				42B389CF208AF00700D71743 /* main.cpp in Sources */,
+				420993382005E9F8000E5F0C /* getlocation.cpp in Sources */,
+				42A34FA8205221CA0038B958 /* main.cpp in Sources */,
+				420993132005E9BA000E5F0C /* bidbase.cpp in Sources */,
+				4209930F2005E9BA000E5F0C /* ad_control.cpp in Sources */,
+				420993142005E9BA000E5F0C /* filter_assist.cpp in Sources */,
+				420993352005E9F8000E5F0C /* base64.c in Sources */,
+				420993122005E9BA000E5F0C /* bid_conf.cpp in Sources */,
+				420993602005EA15000E5F0C /* xRedisClient_sortedsets.cpp in Sources */,
+				4209933E2005E9F8000E5F0C /* url_endecode.cpp in Sources */,
+				420993162005E9BA000E5F0C /* req_common.cpp in Sources */,
+				420993612005EA15000E5F0C /* xRedisClient_strings.cpp in Sources */,
+				420993622005EA15000E5F0C /* xRedisClient.cpp in Sources */,
+				420993482005EA06000E5F0C /* bid_info.pb.cc in Sources */,
+				4209933F2005E9F8000E5F0C /* util_base.cpp in Sources */,
+				4209935C2005EA15000E5F0C /* xRedisClient_keys.cpp in Sources */,
+				4209933D2005E9F8000E5F0C /* thread.cpp in Sources */,
+				4209933A2005E9F8000E5F0C /* json.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		420992E82005E941000E5F0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		420992E92005E941000E5F0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		420992EB2005E941000E5F0C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		420992EC2005E941000E5F0C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		420992DE2005E941000E5F0C /* Build configuration list for PBXProject "BidCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				420992E82005E941000E5F0C /* Debug */,
+				420992E92005E941000E5F0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		420992EA2005E941000E5F0C /* Build configuration list for PBXNativeTarget "BidCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				420992EB2005E941000E5F0C /* Debug */,
+				420992EC2005E941000E5F0C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 420992DB2005E941000E5F0C /* Project object */;
+}

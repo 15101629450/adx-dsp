@@ -1,0 +1,103 @@
+请求时间				1514239219888
+adx类型                                 14
+唯一请求ID                              20171226-060019_bidreq_137-354-LdBl-480
+是否参与竞价(0：false，1：true)         1
+展现信息唯一ID                          20171226-060019_reqimp_137-354-5ltK-479
+impress类型                             1
+图片广告位宽度                          600
+图片广告位高度                          500
+拒绝的广告类型                          NULL
+拒绝的创意属性                          NULL
+支持播放的视频格式                      NULL
+视频广告位类型                          0
+视频广告最小时长                        0
+视频广告最大时长                        0
+视频广告位宽度                          0
+视频广告位高度                          0
+拒绝的广告属性                          NULL
+原生广告布局样式                        0
+广告数量                                1
+广告元素ID                              NULL
+广告元素是否必须                        NULL
+asset类型                               NULL
+Title元素最大文字长度                   NULL
+元素的类型                              NULL
+元素的宽度                              NULL
+元素要求的最小宽度                      NULL
+元素的高度                              NULL
+元素要求的最小高度                      NULL
+元素支持的图片类型(0x01分隔)            NULL
+数据类型                                NULL
+元素最大文字长度                        NULL
+底价                                    0.000000
+竞价货币                                CNY
+是否全插屏广告                          1
+是否开屏广告                            0
+app唯一id                               8efe3c740ea8a7a28c65d8817af18a6f
+app名称                                 失恋回避！！！
+app类型(多类型用0X01区分)               398592
+包名或id                                air.mgg1princessgownsdressup
+app下载连接                             http:\/\/www.coolapk.com\/game\/air.jp.globalgear.iiwake.pj
+IMEI的SHAI哈希值(0x01分)                4230ba04f88a7c425574eac84b9dc9ea071b4144e0e2d026b06634d78401915d1bc7ce8e246629dd8f396cabfabfdc06a4f465ebbbe4b0528edfaa03f6ad8117090ff9d08d595a4e
+硬件设备ID类型                          17183334
+androidID或IDFA的值                     e776e36ade34b4a4477a0b729b523568c86af671e23fa02b7bc343544e2d7ce32cb05e37
+平台设备ID类型                          9798
+浏览器的user-agent                      Mozilla\/5.0 (Linux; Android 4.4.4; 2014812 Build\/KTU84P) AppleWebKit\/537.36 (KHTML, like Gecko) Version\/4.0 Chrome\/33.0.0.0 Mobile Safari\/537.36
+regioncode+ip(0x01分割)                 1156310000220.112.121.202
+纬度                                    0.000000
+经度                                    0.000000
+设备运营商                              3
+设备制造商(用0x01分割)                  3Xiaomi
+设备型号                                2014812
+操作系统                                2
+操作系统版本                            4.4.4
+联网方式                                1
+设备类型                                1
+广告行业黑名单                          NULL
+广告主黑名单                            NULL
+该条请求是参与广告推荐                  0
+RTB(0)或PMP(1)                          1
+广告位置                                4
+用户id                                  NULL
+用户性别                                0
+用户出生年份默认值-1）                  -1
+用户标签                                NULL
+用户位置信息(纬度)                      0.000000
+用户位置信息(经度)                      0.000000
+用户历史搜索关键字                      NULL
+选中的创意id                            f5ed1b9b-6dea-43a4-934c-573a5ceea581
+模板ID                                  0
+是否支持deeplink                        0
+
+
+
+
+
+
+
+
+
+追踪格式
+time时间戳                              1514243416188
+bid请求id                               0bsVOO1EtBST0TK1oT3Ksbq818m6vY
+deviceid设备id                          ee5b5d09ca2717c0
+deviceidtype设备id类型                  96  
+mapid创意id                             a018dd4e-dff1-45c0-a0c5-72960307c658
+mctype(m展现,c点击,w赢价)               m
+iadx平台                                7   
+requestaddr（曝光|点击|结算）IP         223.104.186.76
+appidappid(需编码)                      1007558
+network网络                             5
+os操作系统                              2   
+devicetype设备类型                      1   
+reqloc请求地域                          1156370100
+brand品牌                               255 
+carrier运营商                           0   
+make手机型号（需编码）                  DLI-AL10
+iv是否有效（1：有效，0无效）            1   
+errorcode错误码                         0x0 
+
+
+
+
+

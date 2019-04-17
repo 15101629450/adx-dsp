@@ -1,0 +1,5 @@
+ngx_addon_name=adx_com_inmobi
+HTTP_MODULES="$HTTP_MODULES adx_com_inmobi"
+
+CORE_INCS="$CORE_INCS $ngx_addon_dir"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/*.c"

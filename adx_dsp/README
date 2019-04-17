@@ -1,0 +1,41 @@
+
+1 环境需求:
+	Centos 6/7
+	gcc 4.x
+
+2 解压源码:
+    tar xvf libs/fcgi-2.4.1.tar.gz
+    tar xvf libs/hiredis-Cluster.tar.gz
+    tar xvf libs/jemalloc.tar.gz
+    tar xvf libs/librdkafka-0.9.5.tar.gz
+    tar xvf libs/nginx-1.12.2.tar.gz
+    tar xvf libs/protobuf-2.6.1.tar.gz
+    tar xvf libs/spawn-fcgi-1.6.0.tar.gz
+
+3 安装依赖环境:
+
+    安装hiredis(二次开发)
+        make && make install
+	
+	安装jemalloc
+		./configure --with-lg-quantum=3 --with-jemalloc-prefix=je_ --enable-cc-silence CFLAGS="-std=gnu99 -Wall -pipe -g3 -O3 -funroll-loops "
+		make && make install
+
+	安装fcgi
+		./configure
+		make && make install
+		
+	安装librdkafka
+		./configure
+		make && make install
+
+4 编译主程序:
+	make && make install
+	
+5 定制配置文件:
+	vim /etc/adx_dsp.conf
+
+7 启动程序:
+    spawn-fcgi -a $IP -p $PORT -f /usr/bin/adx_dsp
+
+

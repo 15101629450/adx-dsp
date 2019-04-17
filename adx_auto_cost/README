@@ -1,0 +1,48 @@
+
+1 环境需求:
+	Centos 6/7
+	python 2.6/2.7
+	gcc 4.x
+
+2 解压源码:
+	tar xvf auto_cost.tar.gz
+	cd auto_cost/libs/
+		tar xvf hiredis-Cluster.tar.gz
+		tar xvf jemalloc.tar.gz
+		tar xvf python-API.tar.gz
+
+3 安装依赖环境:
+	cd auto_cost/libs/
+	安装hiredis(二次开发)
+		make && make install
+	
+	安装jemalloc
+		./configure --with-lg-quantum=3 --with-jemalloc-prefix=je_ --enable-cc-silence CFLAGS="-std=gnu99 -Wall -pipe -g3 -O3 -funroll-loops "
+		make && make install
+	
+	安装python-API
+	yum install python python-devel
+	python setup.py install
+
+	安装R 语言环境
+	wget ftp://fr2.rpmfind.net/linux/Mandriva/official/2010.0/x86_64/media/main/release/lib64icu42-4.2.1-1mdv2010.0.x86_64.rpm
+	rpm -ivh lib64icu42-4.2.1-1mdv2010.0.x86_64.rpm
+	yum install epel-release R
+
+4 编译主程序:
+	cd auto_cost/
+	make && make install
+	
+6 定制配置文件:
+	cp conf/dsp_auto_cost.conf	/etc/dspads_odin/dsp_auto_cost.conf
+	cp conf/result_region.dict	/etc/dspads_odin/result_region.dict 
+
+7 启动程序:
+	自动出价主程序:      ./auto_cost_server
+	自动出价触发程序:    ./python/auto_cost.py
+	自动出价回归算法:    ./R/get_coef.R
+
+	
+
+	
+

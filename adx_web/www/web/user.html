@@ -1,0 +1,142 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>健康网盟</title>
+
+	<link rel="stylesheet" href="/css/theme.blue.css">
+	<link rel="stylesheet" href="/css/jquery.treeview.css" />
+	<link rel="stylesheet" type="text/css" href="/css/webuploader.css">
+	<link rel="stylesheet" type="text/css" href="/css/diyUpload.css">
+	<link rel="stylesheet" href="/css/public.css" />
+	<link rel="stylesheet" href="/css/dialog.css" />
+	
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.treeview.js"></script>
+	<script type="text/javascript" src="/js/webuploader.html5only.min.js"></script>
+	<script type="text/javascript" src="/js/upload.js"></script>
+	<script type="text/javascript" src="/js/user.js"></script>
+</head>
+
+<body>
+
+	<!--header-->
+	<div class="header">
+		<img class="logo" src="/images/logo.png">
+		<div class="user_info" id="user_info"></div>
+		<div class="menu"> 
+			<ul>
+				<!-- li><a id="nav1">首页</a></li -->
+				<li><a id="nav2">文字推广</a></li>
+				<li><a id="nav3">图片推广</a></li>
+				<li><a id="nav4">品牌推广</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<!--content-->
+	<div class="content">
+
+		<!--list-->
+		<div class="tree">
+
+			<div class="___find_tree"><span>搜索&nbsp&nbsp&nbsp</span><input id="__find_tree" /></div>
+			<input type="button" id="get_campaign_button" value="全部计划" />
+			<ul id="browser" class="filetree treeview-famfamfam"></ul>
+		</div>
+
+		<!--data-->
+		<div class="data">
+
+			<input class="data_button" type="button" id="add_new_data" />
+			<!-- input class="data_button" type="button" id="demo" value="demo" / -->
+
+			<div id="data_table"></div>
+		</div>
+
+		<!--dialog-->
+		<div id="dialog">
+			<div id="dialog_bg_div"></div>
+			<div id="dialog_show_div">
+
+				<div id="__dialog_name"><span></span><input id="dialog_name" /></div>
+
+				<div id="campaign_menu"></div>
+
+				<div id="group_menu"></div>
+
+				<div id="creative_txt_menu">
+
+					<span>创意名称:</span>
+					<input id="creative_txt_name" />
+
+					<span>访问URL:</span>
+					<input id="creative_txt_access_url" />
+
+					<span>显示URL:</span>
+					<input id="creative_txt_display_url" />
+					
+					<span>描述:</span>
+					<textarea id="creative_txt_description"></textarea>
+
+					<span>其他:</span>
+					<textarea id="creative_txt_other"></textarea>
+
+				</div>
+
+				<div id="creative_img_menu">
+
+					<div id="creative_img_upload"></div>
+					<div id="creative_img_upload_list"></div>
+
+					<span>访问URL:</span>
+					<input id="creative_img_access_url" />
+
+					<span>显示URL:</span>
+					<input id="creative_img_display_url" />
+
+					<span>其他:</span>
+					<textarea id="creative_img_other"></textarea>
+					
+				</div>
+
+				<div id="creative_brand_menu">
+
+					<span>创意名称:</span>
+					<input id="creative_brand_name" />
+
+					<span>访问URL:</span>
+					<input id="creative_brand_access_url" />
+
+					<span>显示URL:</span>
+					<input id="creative_brand_display_url" />
+
+					<span>其他:</span>
+					<textarea id="creative_brand_other"></textarea>
+
+				</div>
+
+				<div id="dialog_button">
+					<input type="button" id="dialog_button_yes" value="确定" />
+					<input type="button" id="dialog_button_no" value="取消" />
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="end"></div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

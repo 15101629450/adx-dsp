@@ -1,0 +1,50 @@
+
+@import url(/css/init.css); 
+
+.content {
+    width: 100%;
+    height: 380px;
+    margin-top: 30px;
+    background:url(/images/login_background.jpg);
+}
+
+.login {
+    float:right;
+    line-height: 35px;
+    margin: 100px 100px 0 0;
+    font-size: 20px;
+}
+
+.login li {
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.login li em {
+    float: left; 
+}
+
+.login input {
+    width: 200px; 
+    height: 23px; 
+    font-size: 20px;
+}
+
+#captcha {
+    float: left;
+    width: 100px; 
+}
+
+#captcha_img {
+    width: 80px;
+    height: 30px;
+    margin-left:20px;
+}
+
+#login_button {
+    width: 300px;
+    height: 40px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+

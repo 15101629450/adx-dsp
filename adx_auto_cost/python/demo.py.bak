@@ -1,0 +1,198 @@
+#!/usr/bin/python
+#coding=utf-8
+
+import os
+import sys
+from auto_cost_API import auto_cost, BID
+import logging
+# import psutil
+
+MINI_NUM = 0	# 改价的最小流量
+MAXPRICE = 900	# 最大价格限制
+MINPRICE = 50	# 最小价格限制
+
+obj = auto_cost()
+if (obj.check() == False):
+	print(obj.error())
+	sys.exit(0)
+
+logging.basicConfig(
+	format='[%(asctime)s]%(message)s',
+	level=logging.DEBUG,
+	datefmt='%Y-%m-%d %H:%M:%S',
+	filename=obj.get_conf())
+
+def average_price_parse(count):
+	imp = 0.00
+	cost = 0.00
+	for key in count.keys():
+		try:
+			if 'imp_' in key : imp += float(count[key])
+			if 'cost_' in key : cost += float(count[key])
+			if imp <= 0 : return 0
+		except : pass
+	
+	return cost / imp / 100
+
+def tune_price_element(count, key, ctr_kpi, ctr_cur, coef_cost):
+	
+	# 不是展现数据
+	if not ('imp' in key) : return
+	# print key
+
+	# 计算维度信息
+	try :
+		imp = float(count[key])
+		clk = float(count[key.replace('imp_', 'clk_')])
+		cost = float(count[key.replace('imp_', 'cost_')]) / 100
+	except : return
+    
+	# 截取当前维度信息
+	keys = key.split('_')[1:]
+	adx = keys[0]
+	mapid = keys[1]
+
+	# 计算当前 维度 出价
+	price = cost / imp
+
+	# 计算当前 维度 CTR
+	ctr = clk / imp
+	# print "adx=%s mapid=%s imp=%d clk=%d ctr=%0.2f%% price=%f" % (adx, mapid, imp, clk, ctr * 100, price)
+	
+	# 公式: (ecmp + N) * M%
+	# 计算系数 N
+	coef_ctr = 20
+	if ctr_cur < ctr_kpi :
+
+		if ctr < ctr_kpi :
+			coef_ctr = -20
+		else :
+			coef_ctr = 20
+	else :
+		
+		if ctr < ctr_kpi :
+			coef_ctr = -20
+		else :
+			coef_ctr = 20
+	
+	new_price = (price + coef_ctr) * coef_cost
+	if new_price > MAXPRICE : new_price = MAXPRICE
+	if new_price < MINPRICE : new_price = MINPRICE 
+	# print "(ecmp + %d) * %f =" % (coef_ctr, coef_cost), "%f==>%f" % (price, new_price)
+	
+	logging.info("adx=%s mapid=%s imp=%d clk=%d ctr=%0.2f%% coef_ctr=%d price=(%f==>%f)" % (adx, mapid, imp, clk, ctr * 100, coef_ctr, price, new_price))
+	
+# 自动出价
+def tune_price(info, count):
+
+	# 解析INFO信息    
+	try :
+		complete_time = float(info['complete_time'])
+		surplus_10min = float(info['surplus_10min'])
+		
+		daily_imp_kpi	= float(info['daily_imp_kpi'])
+		daily_imp_count	= float(info['daily_imp_count'])
+		
+		daily_clk_kpi	= float(info['daily_clk_kpi'])
+		daily_clk_count	= float(info['daily_clk_count'])
+		
+		last_10min_imp_count = float(info['last_10min_imp_count'])
+		last_10min_clk_count = float(info['last_10min_clk_count'])
+		
+		if daily_imp_kpi <= 0 or daily_imp_count <= 0 : return
+	except :
+		return
+
+	# print "complete_time =", complete_time, "surplus_10min =", surplus_10min
+	# print "daily_imp_kpi =", daily_imp_kpi, "daily_imp_count =", daily_imp_count
+	# print "daily_clk_kpi =", daily_clk_kpi, "daily_clk_count =", daily_clk_count
+	# print "last_10min_imp_count =",last_10min_imp_count,"last_10min_clk_count =",last_10min_clk_count
+
+	logging.info("surplus_10min=%d complete_time=%d" % (surplus_10min, complete_time))
+	logging.info("daily_imp_kpi=%d daily_imp_count=%d" % (daily_imp_kpi, daily_imp_count))
+	logging.info("daily_clk_kpi=%d daily_clk_count=%d" % (daily_clk_kpi, daily_clk_count))
+		
+	ctr_kpi = daily_clk_kpi / daily_imp_kpi
+	ctr_cur = daily_clk_count / daily_imp_count
+	# print "ctr_kpi =",ctr_kpi,"ctr_cur =",ctr_cur
+
+	next_10min_imp_kpi = (daily_imp_kpi - daily_imp_count) / surplus_10min
+	next_10min_clk_kpi = (daily_clk_kpi - daily_clk_count) / surplus_10min
+	# print "next_10min_imp_kpi =",next_10min_imp_kpi,"next_10min_clk_kpi =",next_10min_clk_kpi
+
+	coef_imp = next_10min_imp_kpi / (last_10min_imp_count / complete_time * 600)
+	coef_clk = next_10min_clk_kpi / (last_10min_clk_count / complete_time * 600)
+	# print "coef_imp =",coef_imp,"coef_clk =", coef_clk
+
+	if coef_imp >= coef_clk : coef_cost = coef_imp
+	else : coef_cost = coef_clk
+
+	# 出价
+	for key in count.keys():
+		tune_price_element(count, key, ctr_kpi, ctr_cur, coef_cost)
+	
+	logging.info("=========================================")
+
+# 清洗节点数据
+def count_filter_element(new_count, count, key):
+
+	# 数据格式不合法    
+    	keys = key.split('_')
+	if len(keys) != 5 : return
+	# print keys[3], keys[2] # adx, mapid
+	
+	# 清洗没有赋值的数据
+	if count[key] is '' : return
+	
+	# 不是展现数据
+	if not ('imp' in key) : return
+
+	# 获取value并且转换float
+	try :
+		imp = float(count[key])
+		clk = float(count[key.replace('imp_', 'clk_')])
+		cost = float(count[key.replace('imp_', 'cost_')])
+		if imp <= 0 or clk <= 0 or cost <= 0 : return
+	except : return
+
+	if imp < MINI_NUM : return
+	# print imp,clk,bid,bidprice
+
+	key_imp = "_".join(("imp", keys[3], keys[2]))
+	key_clk = "_".join(("clk", keys[3], keys[2]))
+	key_cost = "_".join(("cost", keys[3], keys[2]))
+		
+	if new_count.get(key_imp) :
+		new_count[key_imp] += imp
+		new_count[key_clk] += clk
+		new_count[key_cost] += cost
+	else :
+		new_count[key_imp] = imp
+		new_count[key_clk] = clk
+		new_count[key_cost] = cost
+
+# 清洗数据
+def count_filter(count):
+	new_count = {}
+	for key in count.keys():
+		count_filter_element(new_count, count, key)
+		
+	# for key in new_count.keys(): print key, "=", new_count[key]
+	return new_count
+		
+def auto_cost_loop():
+	mess = obj.wait()
+	info = mess['INFO']
+	count = mess['COUNT']
+
+	count = count_filter(count) # 清洗数据
+	tune_price(info, count) # 自动出价
+	
+	# 内存泄漏检测
+	# print "Memory=",psutil.Process(os.getpid()).get_memory_info().rss / 1024 / 1024,"M"
+
+# while(True) : auto_cost_loop()
+auto_cost_loop()
+
+
+

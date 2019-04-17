@@ -1,0 +1,477 @@
+
+#include "adx_dump.h"
+
+// SMEMBERS dsp_policyids
+// GET dsp_policy_info_(policy_id) policy信息
+// GET dsp_policyid_target_(policy_id) 定向
+// SMEMBERS dsp_policy_mapids_(policy_id) mapids
+
+// GET dsp_mapid_(mapid) 创意信息
+// HGETALL dsp_mapid_bid_(mapid) 竞价出价
+// HGET dsp_fixprice_(adx)_(dealid) 定价
+
+// HGETALL dsp_policy_audienceid_(policy_id) 人群包
+// GET adx_templates 模版
+
+// GET dsp_adx_target_(adx) 定向信息
+// GET dsp_img_imp_type  图片展现形式
+
+int adx_dump_load_redis_json(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *cache,
+        const char *cmd)
+{
+    string value;
+    int errcode = adx_redis_command(conn->setting, value, "GET %s", cmd);
+    if (errcode != E_SUCCESS) return -1;
+
+    adx_json_t *json = adx_json_parse(pool, value.c_str());
+    if (!json) return -1;
+
+    return adx_cache_from_json(cache, json);
+}
+
+adx_cache_t *adx_dump_load_creative_size(
+        adx_cache_t *cache,
+        adx_json_t *json,
+        int size_type)
+{
+    int w = adx_json_find_value_number(json, "w");
+    int h = adx_json_find_value_number(json, "h");
+    if (!w || !h) return NULL;
+
+    // val type
+    adx_cache_value_t val = ADX_CACHE_NUM(size_type);
+    if (size_type == ADX_SIZE_INFO) {
+        char *sourceurl = adx_json_find_value_string(json, "sourceurl");
+        if (!sourceurl) return NULL;
+        val = ADX_CACHE_STR(sourceurl);
+    }
+
+    char adsize[128];
+    sprintf(adsize, "%dX%d", w, h);
+    return adx_cache_add(cache, ADX_CACHE_STR(adsize), val);
+}
+
+int adx_dump_creative_price_sort(void *p, adx_list_t *a, adx_list_t *b)
+{
+    adx_cache_t *a_cache = adx_list_entry(a, adx_cache_t, next_list);
+    adx_cache_t *b_cache = adx_list_entry(b, adx_cache_t, next_list);
+    int a_price = adx_cache_value_to_number(GET_CACHE_TO_VAL(a_cache));
+    int b_price = adx_cache_value_to_number(GET_CACHE_TO_VAL(b_cache));
+    if (a_price < b_price) return 1;
+    return -1;
+}
+
+adx_cache_t *adx_dump_load_creative_price(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        int map_id)
+{
+    map<string, int> prices;
+    int errcode = adx_redis_command(conn->setting, prices, "HGETALL dsp_mapid_bid_%d", map_id);
+    if (errcode != E_SUCCESS) return NULL;
+
+    adx_cache_t *price_cache = adx_cache_create(pool);
+    adx_cache_add(price_cache, ADX_CACHE_STR("map_id"), ADX_CACHE_NUM(map_id));
+
+    map<string, int>::iterator iter;
+    for(iter = prices.begin(); iter != prices.end(); iter++) {
+        adx_cache_add(price_cache,
+                ADX_CACHE_NUM(adx_atoi(iter->first.c_str())),
+                ADX_CACHE_NUM(iter->second));
+    }
+
+    // adx_cache_display(price_cache);
+    return price_cache;
+}
+
+adx_cache_t *adx_dump_load_creative_info(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache,
+        adx_cache_t *policy_info,
+        adx_cache_t *policy_target,
+        adx_cache_t *creative_price,
+        adx_json_t *creative_json,
+        adx_cache_t *parent_cache)
+{
+
+    adx_cache_t *white_list = adx_cache_add(parent_cache,
+            ADX_CACHE_STR("white_list"), ADX_CACHE_NULL());
+    adx_cache_t *unlimit_list = adx_cache_add(parent_cache,
+            ADX_CACHE_STR("unlimit_list"), ADX_CACHE_NULL());
+
+    // if check white_list
+    parent_cache = white_list;
+    parent_cache = unlimit_list;
+
+    if (rand() % 2) parent_cache = white_list;
+    else parent_cache = unlimit_list;
+
+    // parse price
+    int adx = adx_cache_value_to_number(GET_CACHE_TO_KEY(adx_cache));
+    adx_cache_t *price_cache = adx_cache_find(creative_price, ADX_CACHE_NUM(adx));
+    if (!price_cache) price_cache = adx_cache_find(creative_price, ADX_CACHE_NUM(0));
+    if (!price_cache) return NULL;
+
+    int price = adx_cache_to_number(price_cache);
+    if (!price) return NULL;
+
+    // add map id
+    int map_id = GET_CACHE_FIND_NUM(creative_price, "map_id");
+    int creative_id = adx_json_find_value_number(creative_json, "creativeid");
+    if (!map_id || !creative_id) return NULL;
+
+    adx_cache_t *cache = adx_cache_add(parent_cache, ADX_CACHE_NUM(map_id), ADX_CACHE_NUM(price));
+    if (!cache) return NULL;
+
+    // sort
+    adx_list_sort(NULL, &parent_cache->child_list,
+            parent_cache->child_total + 1,
+            adx_dump_creative_price_sort);
+    // return cache;
+
+    adx_cache_add(cache, ADX_CACHE_STR("creative_id"), ADX_CACHE_NUM(creative_id));
+    adx_cache_splice(cache, policy_info);
+    adx_cache_splice(cache, policy_target);
+    return cache;
+}
+
+int adx_dump_load_creative_banner(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache,
+        adx_cache_t *policy_info,
+        adx_cache_t *policy_target,
+        adx_cache_t *creative_price,
+        adx_json_t *json)
+{
+    // add banner
+    adx_cache_t *cache = adx_cache_add(adx_cache, ADX_CACHE_STR("banner"), ADX_CACHE_NULL());
+
+    // add img size
+    cache = adx_dump_load_creative_size(cache, json, ADX_SIZE_IMG);
+
+    // add creative -> info
+    cache = adx_dump_load_creative_info(pool,
+            conn,
+            adx_cache,
+            policy_info,
+            policy_target,
+            creative_price,
+            json,
+            cache);
+
+    // add creative -> imgs -> url
+    adx_dump_load_creative_size(
+            adx_cache_add(cache, ADX_CACHE_STR("imgs"), ADX_CACHE_NULL()),
+            json, ADX_SIZE_INFO);
+
+    return 0;
+}
+
+int adx_dump_load_creative_native(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache,
+        adx_cache_t *policy_info,
+        adx_cache_t *policy_target,
+        adx_cache_t *creative_price,
+        adx_json_t *json)
+{
+    // add native
+    adx_cache_t *cache = adx_cache_add(adx_cache, ADX_CACHE_STR("native"), ADX_CACHE_NULL());
+
+    // add icon size
+    cache = adx_dump_load_creative_size(cache, adx_json_find(json, "icon"), ADX_SIZE_ICON);
+
+    // add imgs size
+    adx_json_t *imgs = adx_json_find(json, "imgs");
+    if (adx_json_array_check(imgs) != 0) return -1;
+
+    adx_list_t *p = NULL;
+    adx_list_for_each(p, &imgs->child) {
+        adx_json_t *node = adx_list_entry(p, adx_json_t, next);
+        cache = adx_dump_load_creative_size(cache, node, ADX_SIZE_ICON);
+    }
+
+    // add creative -> info
+    cache = adx_dump_load_creative_info(pool,
+            conn,
+            adx_cache,
+            policy_info,
+            policy_target,
+            creative_price,
+            json,
+            cache);
+    // CODE    
+    // return 0;
+
+    // add creative -> icon -> url
+    adx_dump_load_creative_size(
+            adx_cache_add(cache, ADX_CACHE_STR("icon"), ADX_CACHE_NULL()),
+            adx_json_find(json, "icon"), ADX_SIZE_INFO);
+
+    // add creative -> imgs -> url
+    adx_list_for_each(p, &imgs->child) {
+        adx_json_t *node = adx_list_entry(p, adx_json_t, next);
+        adx_dump_load_creative_size(
+                adx_cache_add(cache, ADX_CACHE_STR("imgs"), ADX_CACHE_NULL()),
+                node, ADX_SIZE_INFO);
+    }
+
+    // add native info
+    adx_cache_from_json_string(cache, adx_json_find(json, "title"));
+    adx_cache_from_json_string(cache, adx_json_find(json, "description"));
+    adx_cache_from_json_number(cache, adx_json_find(json, "rating"));
+    // adx_cache_display(cache);
+    return 0;
+}
+
+int adx_dump_load_creative_video(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache,
+        adx_cache_t *policy_info,
+        adx_cache_t *policy_target,
+        adx_cache_t *creative_price,
+        adx_json_t *json)
+{
+    return 0;
+}
+
+int adx_dump_load_creative_parse_type(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache,
+        adx_cache_t *policy_info,
+        adx_cache_t *policy_target,
+        adx_cache_t *creative_price,
+        adx_json_t *json)
+{
+    // 0:未知
+    // 1:文字链接广告
+    // 2:图片广告
+    // 3:GIF广告
+    // 4:HTML5广告
+    // 5:MRAID广告
+    // 6:视频广告
+    // 7:Flash广告
+    // 8:下载App
+    // 9:信息流
+    int type = adx_json_find_value_number(json, "type");
+    if (type == 2)            
+        return adx_dump_load_creative_banner(
+                pool,
+                conn,
+                adx_cache,
+                policy_info,
+                policy_target,
+                creative_price,
+                json);
+    if (type == 9)
+        return adx_dump_load_creative_native(
+                pool,
+                conn,
+                adx_cache,
+                policy_info,
+                policy_target,
+                creative_price,
+                json);
+    if (type == 6)
+        return adx_dump_load_creative_video(
+                pool,
+                conn,
+                adx_cache,
+                policy_info,
+                policy_target,
+                creative_price,
+                json);
+    return -1;
+}
+
+int adx_dump_load_creative_adx(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache,
+        adx_cache_t *policy_info,
+        adx_cache_t *policy_target,
+        adx_cache_t *creative_price,
+        adx_json_t *json)
+{
+    // creative -> exts -> adx
+    adx_json_t *exts = adx_json_find(json, "exts");
+    if (adx_json_array_check(exts) != 0) return -1;
+
+    adx_list_t *p = NULL;
+    adx_list_for_each(p, &exts->child) {
+        adx_json_t *node = adx_list_entry(p, adx_json_t, next);
+        int adx = adx_json_find_value_number(node, "adx");
+        adx_dump_load_creative_parse_type(
+                pool,
+                conn,
+                adx_cache_add(adx_cache, ADX_CACHE_NUM(adx), ADX_CACHE_NULL()),
+                policy_info,
+                policy_target,
+                creative_price,
+                json);
+    }
+
+    return 0;
+}
+
+int adx_dump_load_creative(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache,
+        adx_cache_t *policy_info,
+        adx_cache_t *policy_target,
+        int map_id)
+{
+    string value;
+    int errcode = adx_redis_command(conn->setting, value, "GET dsp_mapid_%d", map_id);
+    if (errcode != E_SUCCESS) return -1;
+
+    // fprintf(stdout, "%s\n", value.c_str());
+    adx_json_t *json = adx_json_parse(pool, value.c_str());
+    if (!json) return -1;
+
+    adx_cache_t *creative_price = adx_dump_load_creative_price(pool, conn, map_id);
+    if (!creative_price) return -1;
+
+    return adx_dump_load_creative_adx(
+            pool,
+            conn,
+            adx_cache,
+            policy_info,
+            policy_target,
+            creative_price,
+            json);
+}
+
+adx_cache_t *adx_dump_load_policy_info(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        int policy_id)
+{
+    string value;
+    int errcode = adx_redis_command(conn->setting, value, "GET dsp_policy_info_%d", policy_id); // policy info
+    if (errcode != E_SUCCESS) return NULL;
+
+    adx_json_t *json = adx_json_parse(pool, value.c_str());
+    if (!json) return NULL;
+
+    int campaign_id = adx_json_find_value_number(json, "campaignid");
+    if (!campaign_id) return NULL;
+#if 0
+    // check pause
+    errcode = adx_redis_command(conn->controller, value, "GET pause_campaign_%d", campaign_id);
+    if (errcode != E_REDIS_KEY_NOT_EXIST) return NULL;
+
+    errcode = adx_redis_command(conn->controller, value, "GET pause_policy_%d", policy_id);
+    if (errcode != E_REDIS_KEY_NOT_EXIST) return NULL;
+#endif
+    adx_cache_t *policy_info = adx_cache_create(pool);
+    adx_cache_add(policy_info, ADX_CACHE_STR("campaign_id"), ADX_CACHE_NUM(campaign_id));
+    adx_cache_add(policy_info, ADX_CACHE_STR("policy_id"), ADX_CACHE_NUM(policy_id));
+    return policy_info;
+}
+
+adx_cache_t *adx_dump_load_policy_target(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        int policy_id)
+{
+    string value;
+    int errcode = adx_redis_command(conn->setting, value, "GET dsp_policyid_target_%d", policy_id);
+    if (errcode != E_SUCCESS) return NULL;
+
+    adx_json_t *json = adx_json_parse(pool, value.c_str());
+    if (!json) return NULL;
+
+    adx_json_t *device = adx_json_find(json, "device");
+    if (!device) return NULL;
+
+    adx_cache_t *target = adx_cache_create(pool);
+    adx_cache_from_json_array(target, adx_json_find(device, "regioncode")); // ip地理位置
+    adx_cache_from_json_array(target, adx_json_find(device, "connectiontype")); // 网络类型
+    adx_cache_from_json_array(target, adx_json_find(device, "carrier")); // 运营商
+    adx_cache_from_json_array(target, adx_json_find(device, "devicetype")); // 设备类型(手机/平板)
+    adx_cache_from_json_array(target, adx_json_find(device, "os")); // 操作系统
+    adx_cache_from_json_array(target, adx_json_find(device, "make")); // 手机品牌
+    // adx_cache_display(target);
+    return target;
+}
+
+int adx_dump_load_policy(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache,
+        int policy_id)
+{
+    // policy -> info
+    adx_cache_t *policy_info = adx_dump_load_policy_info(pool, conn, policy_id);
+    if (!policy_info) return -1;
+
+    // policy -> target
+    adx_cache_t *policy_target = adx_dump_load_policy_target(pool, conn, policy_id);
+    // if (!policy_target) return -1;
+
+    // policy -> mapid -> list
+    vector <int> value;
+    adx_redis_command(conn->setting, value, "SMEMBERS dsp_policy_mapids_%d", policy_id);
+    for (size_t i = 0; i < value.size(); i++)
+        adx_dump_load_creative(pool, conn, adx_cache, policy_info, policy_target, value[i]);
+
+    return 0;
+}
+
+void adx_dump_load_policy_list(
+        adx_pool_t *pool,
+        adx_redis_conn *conn,
+        adx_cache_t *adx_cache)
+{
+    vector <int> value;
+    adx_redis_command(conn->setting, value, "SMEMBERS dsp_policyids");
+    // for (size_t i = 0; i < value.size(); i++) adx_dump_load_policy(pool, conn, adx_cache, value[i]);
+    for (int i = 1; i < 600; i++) adx_dump_load_policy(pool, conn, adx_cache, i);
+}
+
+static adx_cache_t *cache_root = NULL;
+adx_cache_t *get_cache_root(){return cache_root;}
+int adx_dump_main(adx_list_t *adx_conf)
+{
+    adx_pool_t *pool = adx_pool_create();
+    adx_redis_conn *conn = adx_redis_init(adx_conf);
+    if (!conn) return -1;
+
+    adx_cache_t *root = adx_cache_create(pool);
+    adx_cache_t *adx_cache = adx_cache_add(root, ADX_CACHE_STR("adx"), ADX_CACHE_NULL());
+
+    adx_dump_load_policy_list(pool, conn, adx_cache);
+    // adx_dump_load_redis_json(pool, conn, root, "adx_templates");
+    cache_root = root;
+
+    adx_cache_display(root);
+    double memory_size = adx_cache_memory_size(root);
+    memory_size = memory_size / 1024 / 1024;
+    fprintf(stdout, "\ncache memory size = %fM\n", memory_size);
+    return 0;
+}
+
+#if 10
+#define DSP_CONF_PATH "/etc/adx_dsp.conf"
+int main(int argc, char *argv[])
+{
+    // 初始化配置文件
+    adx_list_t *conf = adx_conf_file_load(DSP_CONF_PATH);
+    if (!conf) return -1;
+
+    // adx_dump_main(conf);
+    return 0;
+}
+#endif
+
+

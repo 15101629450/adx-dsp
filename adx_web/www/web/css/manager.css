@@ -1,0 +1,136 @@
+
+@import url(/css/init.css); 
+
+#dialog_show_div {
+	top: 20%;
+	left: 25%;
+	width: 600px;
+	height: 450px;
+	padding: 10px;
+	background: #ffffff;
+	box-shadow: 0 0 10px #ffffff;
+
+	display: none;
+	position: absolute;
+	#position: fixed;
+	overflow: auto;
+	z-index: 1002;
+}
+
+#dialog_bg_div {
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+
+	display: none;
+	position: fixed;
+	opacity: .5;
+	z-index: 1001;
+}
+
+#add_account {
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 200px;
+	height: 35px;
+}
+
+#add_place {
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 200px;
+	height: 35px;
+}
+
+#data_table {
+
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.jump {
+	width: 100px;
+	height: 30px;
+}
+
+.status {
+	width: 30px;
+	height: 30px;
+}
+
+#dialog_button {
+	width: 200px;
+	height: 40px;
+	left: 50%;
+	margin-left: -100px;
+	position: absolute;
+	bottom: 10px;
+}
+
+#dialog_button input {
+	width: 90px;
+	line-height: 30px;
+	margin:0 auto;
+}
+
+#dialog_show_div span {
+	margin-top: 10px;
+	float: left;
+}
+
+#account_name {
+	float: left;
+	resize:none;
+	width: 595px;
+}
+
+#account_pass {
+	float: left;
+	resize:none;
+	width: 595px;
+}
+
+#company_name {
+	float: left;
+	resize:none;
+	width: 595px;
+}
+
+#webim {
+	float: left;
+	resize:none;
+	width: 595px;
+	height: 200px;
+}
+
+#place_type {
+	float: left;
+	resize:none;
+	width: 595px;
+}
+
+#place_size {
+	float: left;
+	resize:none;
+	width: 595px;
+}
+
+#place_media {
+	float: left;
+	resize:none;
+	width: 595px;
+}
+
+#place_memo {
+	float: left;
+	resize:none;
+	width: 595px;
+	height: 200px;
+}
+
+
+
+

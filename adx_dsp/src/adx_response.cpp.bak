@@ -1,0 +1,42 @@
+
+#include "adx_dsp.h"
+
+int adx_response(adx_request_t *r, int status, const char *buffer)
+{
+    char headers[128];
+    int size = sprintf(headers, "Status: %d\r\n\r\n", status);
+    FCGX_PutStr(headers, size, r->fcgi_app.out);
+    if (buffer) FCGX_PutStr(buffer, strlen(buffer), r->fcgi_app.out);
+    FCGX_PutStr("\r\n", 2, r->fcgi_app.out);
+    FCGX_Finish_r(&r->fcgi_app);
+    return 0;
+}
+
+int adx_response(adx_request_t *r, adx_json_t *imps, adx_select_t *select)
+{
+    adx_json_t *imp = adx_json_add_object(r->pool, imps, NULL);
+    adx_json_add_string(r->pool, imp, "template", select->template_buffer);
+    int mapid = adx_cache_value_to_number(GET_CACHE_TO_KEY(select->map));
+    adx_json_add_number(r->pool, imp, "mapid", mapid);
+    adx_json_add_number(r->pool, imp, "price", select->price);
+
+    fprintf(stdout, "==============================================================\n");
+    return 0;
+}
+
+int adx_response(adx_request_t *r)
+{
+    adx_json_t *json = ADX_JSON_ROOT(r->pool);
+    adx_json_add_string(r->pool, json, "bid", r->bid);
+    adx_json_t *imps = adx_json_add_array(r->pool, json, "imps");
+
+    adx_list_t *p = NULL;
+    adx_list_for_each(p, &r->adx_slot_list) {
+        adx_select_t *node = (adx_select_t *)p;
+        adx_response(r, imps, node);
+    }
+
+    return adx_response(r, 200, adx_json_to_buffer(r->pool, json));
+}
+
+

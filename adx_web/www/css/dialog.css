@@ -1,0 +1,215 @@
+
+#dialog_show_div {
+	top: 10%;
+	left: 25%;
+	width: 600px;
+	height: 500px;
+	padding: 10px;
+	background: #ffffff;
+	box-shadow: 0 0 10px #ffffff;
+
+	display: none;
+	position: absolute;
+	overflow: auto;
+	z-index: 1002;
+}
+
+#dialog_bg_div {
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+
+	display: none;
+	position: fixed;
+	opacity: .5;
+	z-index: 1001;
+}
+
+#dialog_title {
+
+}
+
+#dialog_name {
+	margin-left: 10px;
+	margin-top: 15px;
+}
+
+#dialog_button {
+	width: 200px;
+	height: 40px;
+	left: 50%;
+	margin-left: -100px;
+	position: absolute;
+	bottom: 10px;
+}
+
+#dialog_button input {
+	width: 90px;
+	line-height: 30px;
+	margin:0 auto;
+}
+
+#campaign_menu {
+	display: none;
+}
+
+#region_father {
+	float: left;
+	margin-top: 10px;
+	box-shadow: 0 0 1px #000000;
+}
+
+#region_father ul {
+	float:left;
+	width: 600px;
+	list-style:none
+}
+
+#region_father ul li {
+	float:left;
+	width: 150px;
+	line-height: 20px
+}
+
+#region_children {
+	float: left;
+	height: 200px;
+	overflow-y:auto;
+
+	margin-top: 10px;
+	box-shadow: 0 0 1px #000000;
+}
+
+#region_children ul {
+	float:left;
+	width: 600px;
+	list-style:none
+}
+
+#region_children ul li {
+	float:left;
+	width: 150px;
+	line-height:20px
+}
+
+#region_father ul li:hover {
+	background: #99BFE6;
+}
+
+#region_children ul li:hover {
+	background: #99BFE6;
+}
+
+#dialog_region_all {
+	margin-top: 10px;
+	margin-left: 0;
+}
+
+#dialog_region_select {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+#group_menu {
+	height: 400px;
+	overflow-y:auto;
+	margin-top: 10px;
+	box-shadow: 0 0 1px #000000;
+	display: none;
+}
+
+.disease_level-2 {
+	display: block;
+	padding-left: 20px;
+}
+
+.disease_level-3 {
+	display: block;
+	padding-left: 40px;
+}
+
+.creative_menu {
+	height: 400px;
+	overflow-y:auto;
+	margin-top: 10px;
+	box-shadow: 0 0 1px #000000;
+	display: none;
+}
+
+#creative_txt_menu span {
+
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+#creative_txt_menu input {
+
+	float: left;
+	width: 575px;
+	margin-left: 10px;
+}
+
+#creative_txt_menu textarea {
+
+	float: left;
+	resize:none;
+	width: 575px;
+	height: 100px;
+	margin-left: 10px;
+}
+
+#creative_img_upload_list { 
+	float: left;
+	height: 150px;
+	width: 600px;
+	overflow-y:auto;
+
+	margin-top: 10px;
+	box-shadow: 0 0 1px #000000;
+}
+
+#creative_img_menu span {
+	margin-top: 10px;
+	float: left;
+}
+
+#creative_img_menu input {
+	float: left;
+	resize:none;
+	width: 595px;
+
+}
+
+#creative_img_other {
+
+	float: left;
+	resize:none;
+	width: 600px;
+	height: 100px;
+
+}
+
+#creative_brand_menu span {
+	margin-top: 10px;
+	float: left;
+}
+
+#creative_brand_menu input {
+	float: left;
+	resize:none;
+	width: 595px;
+
+}
+
+#creative_brand_other {
+	float: left;
+	resize:none;
+	width: 600px;
+	height: 100px;
+}
+
+
+

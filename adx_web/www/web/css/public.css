@@ -1,0 +1,104 @@
+
+@import url(/css/init.css); 
+
+.header {
+    background: url(/images/toprbg.jpg);
+    background-size: 100% 100%;
+}
+
+.logo {
+    float: left;
+}
+
+.user_info {
+    float: right;
+    margin: 10px 20px 0 0;
+    color: #ffffff; 
+}
+
+.user_info span {
+    float: right;
+    color: #ffffff; 
+}
+
+.user_info a {
+    float: right;
+    color: #ffffff; 
+}
+
+.menu {
+    text-align: center;
+}
+
+.menu ul {
+    list-style: none;
+    display: inline-table;
+}
+
+.menu ul li {
+    float: left;
+}
+.menu ul li:hover {
+    /* background: #99BFE6; */
+}
+
+.menu ul li:hover a {
+    color: #000000; 
+}
+
+.menu ul li a {
+    display: block; 
+    padding: 30px 30px;
+    color: #ffffff;
+}
+
+.content {
+    width: 100%;
+    height: 500px;
+}
+
+.tree {
+    float: left;;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 200px;
+    height: 500px;
+}
+
+#get_campaign_button {
+    margin-top: 10px;
+    width: 183px;
+}
+
+.data {
+    width: 80%;
+    float: left;;
+}
+
+.data_button {
+    margin-top: 10px;
+    margin-left: 15px;
+    width: 200px;
+    height: 35px;
+}
+
+#data_guide {
+    float: right;
+}
+
+#data_table {
+    margin-left: 15px;
+}
+
+.___find_tree {
+
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.__run_status {
+
+    float: right;
+}
+
+

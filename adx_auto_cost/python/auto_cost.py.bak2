@@ -1,0 +1,142 @@
+#!/usr/bin/python
+#coding=utf-8
+
+import os
+import sys
+from auto_cost_API import auto_cost, BID
+import logging
+import psutil
+
+CTR_ERROR = 0.2  ## ctr 相对误差
+PRICE_RATE = 0.15  # 价格调整力度基准
+MAXRANGE = 0.33  # 最大变化正负比例
+MINI_NUM = 30 # 改价的最小流量
+MAXPRICE = 999  # 最大价格限制
+MINPRICE = 50  # 最小价格限制
+
+obj = auto_cost()
+if (obj.check() == False):
+	print(obj.error())
+	sys.exit(0)
+
+logging.basicConfig(
+	format='[%(asctime)s]%(message)s',
+	level=logging.DEBUG,
+	datefmt='%Y-%m-%d %H:%M:%S',
+	filename=obj.get_conf())
+
+def tune_price_element(count, key, direction, ctr_kpi, ctr_cur):
+
+	# 计算维度信息
+	try:
+		key_bid = key.replace('bidprice_', 'bid_')
+		key_imp = key.replace('bidprice_', 'imp_')
+		key_clk = key.replace('bidprice_', 'clk_')
+
+		# 计算当前 维度 出价
+		price = float(count[key]) / (float(count[key_bid]) + 0.1)
+		
+		# 计算当前 维度 CTR
+		ctr = float(count[key_clk]) / (float(count[key_imp]) + 0.1)
+	except:
+		return
+
+	# 设置系数
+	coef = PRICE_RATE
+	new_price = price
+
+	if ctr > ctr_kpi :
+		if direction == "UP" : new_price = price * (1 + coef)
+		if direction == "DOWN" : new_price = price * (1 - coef)
+	
+	# if ctr < ctr_kpi :
+	#	if direction == "UP" : new_price = price * (1 + coef)
+	#	if direction == "DOWN" : new_price = price * (1 - coef)
+
+	if new_price == price : return
+
+	key = key.split('_')[2:]
+	if len(key) != 3 : return
+	
+	obj.bid_write(key[0], key[1], "all", key[2], str(new_price))
+
+	mess = "[%s][%s-%s-%s][%d][%f/%f/%f][%f==>%f]" % (
+		direction,
+		key[0], key[1], key[2],
+		len(count),
+		ctr_kpi, ctr_cur, ctr,
+		price, new_price
+		)
+	logging.info(mess)
+
+# 自动出价
+def tune_price(info, count):
+	
+	try:
+		# 计算CTR	
+		daily_imp_kpi	= float(info['daily_imp_kpi'])
+		daily_clk_kpi	= float(info['daily_clk_kpi'])
+		daily_imp_count	= float(info['daily_imp_count'])
+		daily_clk_count	= float(info['daily_clk_count'])
+		
+		if daily_imp_kpi <= 0 or daily_imp_count <= 0 : return
+		
+		ctr_kpi = daily_clk_kpi / daily_imp_kpi
+		ctr_cur = daily_clk_count / daily_imp_count
+	except:
+		return
+	
+	# 出价规则
+	if ctr_cur > ctr_kpi : direction = "DOWN"
+	else : direction = "UP"
+
+	# 出价
+	for key in count.keys():
+		if 'bidprice' in key :
+			tune_price_element(count, key, direction, ctr_kpi, ctr_cur)
+
+# 清洗节点数据
+def count_filter_element(new_count, count, key):
+	# 清洗没有赋值的数据
+	if count[key] is '' : return
+	
+	try : imp_count = int(count[key])
+	except : return
+
+	if imp_count < MINI_NUM : return
+	
+	try :
+		key_clk = key.replace('imp_', 'clk_')
+		key_bid = key.replace('imp_', 'bid_')
+		key_bidprice = key.replace('imp_', 'bidprice_')
+
+		new_count[key] = count[key]
+		new_count[key_clk] = count[key_clk]
+		new_count[key_bid] = count[key_bid]
+		new_count[key_bidprice] = count[key_bidprice]
+	except : return
+
+# 清洗数据
+def count_filter(count):
+	new_count = {}
+	for key in count.keys():
+		if 'imp' in key :
+			count_filter_element(new_count, count, key)
+
+	return new_count
+
+def auto_cost_loop():
+	mess = obj.wait()
+	info = mess['INFO']
+	count = mess['COUNT']
+
+	count = count_filter(count) # 清洗数据
+	tune_price(info, count) # 自动出价
+	
+	# 内存泄漏检测
+	# print "Memory=",psutil.Process(os.getpid()).get_memory_info().rss / 1024 / 1024,"M"
+
+while(True) : auto_cost_loop()
+
+
+

@@ -1,0 +1,94 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>健康网盟</title>
+
+	<link rel="stylesheet" href="/css/theme.blue.css">
+	<link rel="stylesheet" href="/css/jquery.treeview.css" />
+	<link rel="stylesheet" type="text/css" href="/css/webuploader.css">
+	<link rel="stylesheet" type="text/css" href="/css/diyUpload.css">
+	<link rel="stylesheet" href="/css/public.css" />
+	<link rel="stylesheet" href="/css/manager.css" />
+	
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.treeview.js"></script>
+	<script type="text/javascript" src="/js/webuploader.html5only.min.js"></script>
+	<script type="text/javascript" src="/js/upload.js"></script>
+	<script type="text/javascript" src="/js/manager.js"></script>
+</head>
+
+<body>
+
+	<!--header-->
+	<div class="header">
+		<img class="logo" src="/images/logo.png">
+		<div class="user_info" id="user_info"></div>
+		<div class="menu"> 
+			<ul>
+
+				<li><a id="nav1">账户管理</a></li>
+				<li><a id="nav2">广告位管理</a></li>
+				<li><a id="nav3">报告管理</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="content">
+		<input type="button" id="add_account" value="添加用户" />
+		<input type="button" id="add_place" value="添加广告位" />
+
+		<div id="data_table"></div>
+	</div>
+
+	<div id="dialog">
+		<div id="dialog_bg_div"></div>
+		<div id="dialog_show_div">
+
+			<div id="___account">
+				<span>账户:</span>
+				<input id="account_name" />
+
+				<span>密码:</span>
+				<input id="account_pass" />
+
+				<span>公司名称:</span>
+				<input id="company_name" />
+
+				<span>WEBIM:</span>
+				<textarea id="webim"></textarea>
+			</div>
+
+			<div id="___place">
+				<span>类型:</span>
+				<select id="place_type">  
+					<option value="1">文字推广</option>  
+					<option value="2">图片推广</option>  
+					<option value="3">品牌推广</option>  
+				</select>  
+
+				<span>尺寸:(对应图片推广 例:10X10 注意X大写)</span>
+				<input id="place_size" />
+
+				<span>所属媒体:</span>
+				<select id="place_media">  
+					<option value="1">宝典</option>  
+				</select>  
+
+				<span>描述:</span>
+				<textarea id="place_memo"></textarea>
+
+			</div>
+
+			<div id="dialog_button">
+				<input type="button" id="dialog_button_yes" value="确定" />
+				<input type="button" id="dialog_button_no" value="取消" />
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+
+

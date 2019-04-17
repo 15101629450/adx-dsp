@@ -1,0 +1,28 @@
+
+#ifndef __ADX_DUMP_H__
+#define __ADX_DUMP_H__
+
+#include "adx_type.h"
+#include "adx_list.h"
+#include "adx_string.h"
+#include "adx_json.h"
+#include "adx_redis.h"
+#include "adx_cache.h"
+
+#define ADX_DUMP_ALL "all"
+
+adx_cache_t *get_cache_root();
+int adx_dump_main(adx_list_t *adx_conf);
+void adx_dump_load_policy(adx_pool_t *pool, adx_redis_conn *conn, adx_cache_t *policy_list, adx_cache_t *map_list);
+void adx_dump_load_policy_mapid(adx_pool_t *pool, adx_redis_conn *conn, adx_cache_t *policy_node, adx_cache_t *map_list);
+void adx_dump_load_policy_target(adx_pool_t *pool, adx_redis_conn *conn, adx_cache_t *policy_node);
+void adx_dump_load_creative(adx_pool_t *pool, adx_redis_conn *conn, adx_cache_t *creative_list, adx_cache_t *map_list);
+void adx_dump_load_redis_json(adx_pool_t *pool, adx_redis_conn *conn, adx_cache_t *root, const char *cmd);
+
+adx_cache_t *adx_dump_init(adx_pool_t *pool, adx_redis_conn *conn);
+void adx_element_init(adx_cache_t *root, adx_cache_t *element_root);
+adx_cache_t *adx_element_templates(adx_cache_t *templates, int adx);
+
+#endif
+
+

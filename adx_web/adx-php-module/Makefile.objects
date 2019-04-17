@@ -1,0 +1,10 @@
+adx.lo: /make/adx_web/php-module/adx.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/make/adx_web/php-module $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /make/adx_web/php-module/adx.c -o adx.lo 
+adx_app.lo: /make/adx_web/php-module/adx_app.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/make/adx_web/php-module $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /make/adx_web/php-module/adx_app.c -o adx_app.lo 
+adx_bootstrap.lo: /make/adx_web/php-module/adx_bootstrap.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/make/adx_web/php-module $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /make/adx_web/php-module/adx_bootstrap.c -o adx_bootstrap.lo 
+adx_controllers.lo: /make/adx_web/php-module/adx_controllers.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/make/adx_web/php-module $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /make/adx_web/php-module/adx_controllers.c -o adx_controllers.lo 
+yes.lo: /make/adx_web/php-module/yes
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/make/adx_web/php-module $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /make/adx_web/php-module/adx_controllers.c -o adx_controllers.lo 

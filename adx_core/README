@@ -1,0 +1,32 @@
+
+1 环境需求:
+	Centos 6/7
+	gcc 4.x
+
+2 解压源码:
+	tar xvf PV.tar.gz
+	tar xvf libs/fcgi-2.4.1.tar
+
+3 安装依赖环境:
+	安装 mysql-devel
+		yum install mysql-devel
+		yum install mysql-libs
+	
+	安装 fcgi
+		cd libs/fcgi-2.4.1-SNAP-0311112127
+		./configure
+		make && make install
+
+5 编译主程序:
+	make && make install
+	
+6 定制配置文件:
+	cp conf/dsp_pv.conf /etc/dspads_odin/dsp_pv.conf
+	vim /etc/dspads_odin/dsp_pv.conf 
+
+7 启动程序:
+	spawn-fcgi -a $IP -p $PORT -f /usr/bin/odin_pv
+	
+
+8 拷贝最新IP库
+	IP库路径: /etc/dspads_odin/ipb	
