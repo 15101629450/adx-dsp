@@ -1,0 +1,222 @@
+
+message ComRequest {
+
+    // adx编号
+    optional int32 adx = 1;
+
+    // 请求id
+    optional string bid = 2;
+
+    // **** 广告位信息 ****
+    message AdxSlot {
+
+        // 广告位id
+        optional string adx_slot_id = 1;
+
+        // 当前页面广告位顺序id
+        optional int32 adx_slot_sequence_id = 2;
+
+        // 广告类型
+        enum AdxSlotType {
+            ADX_SLOT_UNKNOWN = 0;                // 未知
+            ADX_SLOT_BANNER = 1;                 // BANNER广告
+            ADX_SLOT_NATIVE = 2;                 // 原生广告
+            ADX_SLOT_VIDEO = 3;                  // 视频广告
+        }
+
+        optional AdxSlotType adx_slot_type = 3;
+
+        // banner
+        message Banner {
+
+            // 宽
+            optional int32 width = 1;
+
+            // 高
+            optional int32 height = 2;
+        }
+
+        // native
+        message Native {
+
+            // icon size
+            optional int32 icon_width = 1;
+            optional int32 icon_height = 2;
+
+            // img size
+            optional int32 width = 3;
+            optional int32 height = 4;
+        }
+
+        // video
+        message Video {
+
+            // 宽
+            optional int32 width = 1;
+
+            // 高
+            optional int32 height = 2;
+
+            // 最短时间            
+            optional int32 min_duration = 3;
+
+            // 最长时间
+            optional int32 max_duration = 4;
+        }
+
+        // banner
+        optional Banner banner = 4;
+
+        // native
+        optional Native native = 5;
+
+        // video
+        optional Video video = 6;
+
+        // 底价
+        optional int32 price_floor = 7;
+    }
+
+    repeated AdxSlot adx_slot = 3;
+
+    // 设备信息
+    message Device {
+
+        // 设备ID类型
+        enum DeviceIdType {
+            ADX_DEVICEID_UNKNOW = 0;             // 未知
+            ADX_DEVICEID_IMEI = 1;               // IMEI 明文
+            ADX_DEVICEID_IMEI_SHA1 = 2;          // IMEI sha1
+            ADX_DEVICEID_IMEI_MD5 = 3;           // IMEI md5
+            ADX_DEVICEID_ANDROID_ID = 4;         // ANDROID_ID
+            ADX_DEVICEID_ANDROID_ID_SHA1 = 5;    // ANDROID_ID sha
+            ADX_DEVICEID_ANDROID_ID_MD5 = 6;     // ANDROID_ID md5
+            ADX_DEVICEID_IDFA = 7;               // idfa 明文
+            ADX_DEVICEID_IDFA_SHA1 = 8;          // idfa sha1
+            ADX_DEVICEID_IDFA_MD5 = 9;           // idfa md5
+            ADX_DEVICEID_MAC = 10;               // mac 明文
+            ADX_DEVICEID_MAC_SHA1 = 11;          // mac sha1
+            ADX_DEVICEID_MAC_MD5 = 12;           // mac md5
+        }
+
+        // 设备ID
+        message DeviceID {
+            optional string id = 1;
+            optional DeviceIdType type = 2;
+        }
+
+        repeated DeviceID device_id = 1;
+
+        // 设备类型         
+        enum DeviceType {
+            ADX_DEVICE_UNKNOWN = 0;             // 未知
+            ADX_DEVICE_MOBILE = 1;              // 手机
+            ADX_DEVICE_PAD = 2;                 // 平板
+            ADX_DEVICE_PC = 3;                  // PC
+        };
+
+        optional DeviceType device_type = 2;
+
+        // 操作系统   
+        enum OS {
+            ADX_OS_UNKNOWN = 0;                 // 未知
+            ADX_OS_IOS = 1;                     // iOS
+            ADX_OS_ANDROID = 2;                 // Android
+            ADX_OS_WINDOWS = 3;                 // Windows
+        };
+
+        optional OS os = 3;
+
+        // 操作系统版本 
+        optional string os_version = 4;
+
+        // 运营商类型 
+        enum Carrier {
+            ADX_CARRIER_UNKNOWN = 0;            // 未知
+            ADX_CARRIER_CHINA_MOBILE = 1;       // 中国移动
+            ADX_CARRIER_CHINA_UNICOM = 2;       // 中国联通
+            ADX_CARRIER_CHINA_TELECOM = 3;      // 中国电信
+        }
+
+        optional Carrier carrier = 5;
+
+        // 网络类型
+        enum Connection {
+            ADX_CONNECTION_UNKNOWN = 0;         // 未知
+            ADX_CONNECTION_WIFI = 1;            // WIFI
+            ADX_CONNECTION_2G = 2;              // 2G
+            ADX_CONNECTION_3G = 3;              // 3G
+            ADX_CONNECTION_4G = 4;              // 4G
+            ADX_CONNECTION_5G = 5;              // 5G
+        }
+
+        optional Connection connection = 6;
+
+        // 设备制造商
+        optional string brand = 7;
+
+        // 设备品牌
+        optional string model = 8;
+
+        // User-Agent
+        optional string user_agent = 9; 
+
+        // 用户IP地址
+        optional string ip = 10;
+    }
+
+    optional Device device = 4;
+
+    // 设备信息
+    message App {
+
+        // app id 
+        optional string app_id = 1;
+
+        // app应用分类
+        optional int32 app_category = 2;
+    }
+
+    optional App app = 5;
+}
+
+message ComResponse {
+
+    // 请求id
+    optional string bid = 1;
+
+    // **** 广告位信息 ****
+    message AdxSlot {
+
+        // 广告位id
+        optional string adx_slot_id = 1;
+
+        // 当前页面广告位顺序id
+        optional int32 adx_slot_sequence_id = 2;
+
+        // 广告类型
+        enum AdxSlotType {
+            ADX_SLOT_UNKNOWN = 0;                // 未知
+            ADX_SLOT_BANNER = 1;                 // BANNER广告
+            ADX_SLOT_NATIVE = 2;                 // 原生广告
+            ADX_SLOT_VIDEO = 3;                  // 视频广告
+        }
+
+        optional AdxSlotType adx_slot_type = 3;
+
+        // 出价
+        optional int32 price = 4;
+
+        // 模版数据
+        optional string template = 5;
+
+        // 扩展数据
+        optional string ext = 6;
+    }
+
+    repeated AdxSlot adx_slot = 2;
+}
+
+
+
+

@@ -1,0 +1,232 @@
+
+#include <stdio.h>
+#include <iostream>
+#include "baidu.pb.h"
+
+using namespace std;
+
+int baidu_request_parse(char *buffer, int size)
+{
+    BidRequest bidrequest;
+    if (!bidrequest.ParseFromArray(buffer, size))
+        return -1;
+
+    // bid
+    const char *bid = bidrequest.id().c_str();
+    cout << "bid = " << bid << endl;
+
+    // ip
+    const char *ip = bidrequest.ip().c_str();
+    cout << "ip = " << ip << endl;
+
+    for (long i = 0; i < bidrequest.adslot_size(); i++) {
+        BidRequest_AdSlot adslot = bidrequest.adslot(i);
+
+        // 底价
+        long bidfloor = adslot.minimum_cpm();
+        cout << "adslot -> bidfloor = " << bidfloor << endl;
+
+        // 展示位置
+        long slot_visibility = adslot.slot_visibility();
+        cout << "adslot -> slot_visibility = " << slot_visibility << endl;
+
+        // 尺寸
+        long w = adslot.width();
+        long h = adslot.height();
+        cout << "adslot -> w = " << w << endl;
+        cout << "adslot -> h = " << h << endl;
+
+
+        // 展示类型
+        // 0  固定
+        // 1  悬浮
+        // 8  图+ICON
+        // 11 插屏
+        // 12 开屏
+        // 13 原生
+        // 21 视频前贴片
+        // 22 视频中贴片
+        // 23 视频后贴片
+        // 26 视频暂停
+        long adslot_type = adslot.adslot_type();
+        cout << "adslot -> adslot_type = " << adslot_type << endl;
+
+        // 0 文本
+        // 1 图片
+        // 2 FLASH
+        // 4 图文
+        // 5 链接单元
+        // 7 Video
+        for (long i = 0; i < adslot.creative_type_size(); i++) {
+            long creative_type = adslot.creative_type(i);
+            cout << "adslot -> creative_type = " << creative_type << endl;
+        }
+    }
+
+    BidRequest_Mobile mobile = bidrequest.mobile();
+
+    // 百度定义的app id
+    const char * app_id = mobile.mobile_app().app_id().c_str();
+    cout << "mobile -> mobile_app -> id = " << app_id << endl;
+
+    // app-id  app-store_id/Android包名 
+    const char *app_bundle_id = mobile.mobile_app().app_bundle_id().c_str();
+    cout << "mobile -> mobile_app -> app_bundle_id = " << app_bundle_id << endl;
+
+    // App应用分类
+    long app_category = mobile.mobile_app().app_category();
+    cout << "mobile -> mobile_app -> app_category = " << app_category << endl;
+
+    // 设备ID
+    long device_id_type = 0;
+    const char *device_id = NULL;
+
+    // UNKNOWN = 0; // 未知
+    // IMEI = 1; // IMEI
+    // MAC = 2; // MAC地址
+    for (long i = 0; i < mobile.id_size(); i++) {
+        device_id = mobile.id(i).id().c_str();
+        cout << "mobile -> id -> id = " << device_id << endl;
+
+        device_id_type = mobile.id(i).type();
+        cout << "mobile -> id -> type = " << device_id_type << endl;
+    }
+
+    // UNKNOWN = 0;    // 未知
+    // ANDROID_ID = 4; // Android适用
+    // IDFA = 5;       // IOS适用
+    for (long i = 0; i < mobile.for_advertising_id_size(); i++) {
+        device_id_type = mobile.for_advertising_id(i).type();
+        cout << "mobile -> for_advertising_id -> type = " << device_id_type << endl;
+    }
+
+    // 设备类型
+    // BidRequest_Mobile::HIGHEND_PHONE
+    // UNKNOWN_DEVICE = 0;
+    // HIGHEND_PHONE = 1;
+    // TABLET = 2;
+    long device_type = mobile.device_type();
+    cout << "mobile -> device_type = " << device_type << endl;
+
+    // 操作系统
+    // BidRequest_Mobile::UNKNOWN_OS
+    // UNKNOWN_OS = 0;
+    // IOS = 1;
+    // ANDROID = 2;
+    // WINDOWS_PHONE = 3;
+    long os = mobile.platform();
+    cout << "mobile -> os = " << os << endl;
+
+    // 操作版本
+    int os_version_major = mobile.os_version().os_version_major();
+    int os_version_minor = mobile.os_version().os_version_minor();
+    int os_version_micro = mobile.os_version().os_version_micro();
+
+    char os_version[128];
+    sprintf(os_version, "%d.%d.%d", os_version_major, os_version_minor, os_version_micro);
+    cout << "mobile -> os_version = " << os_version << endl;
+
+    // user_agent
+    const char *user_agent = bidrequest.user_agent().c_str();
+    cout << "user_agent = " << user_agent << endl;
+
+    // 运营商编号（MCC+MNC编号）
+    // 例如中国移动 46000
+    // 前三位是Mobile Country Code
+    // 后两位是Mobile Network Code
+    long carrier_id = mobile.carrier_id();
+    cout << "mobile -> carrier_id= " << carrier_id << endl;
+
+    // 网络类型
+    // BidRequest_Mobile::WIFI
+    // UNKNOWN_NETWORK = 0;
+    // WIFI = 1;
+    // MOBILE_2G = 2;
+    // MOBILE_3G = 3;
+    // MOBILE_4G = 4;
+    long wireless_network_type = mobile.wireless_network_type();
+    cout << "mobile -> wireless_network_type = " << wireless_network_type << endl;
+
+    // 设备机型
+    const char *model = mobile.model().c_str();
+    cout << "mobile -> model = " << model << endl;
+
+    // 设备品牌
+    const char *brand = mobile.brand().c_str();
+    cout << "mobile -> brand = " << brand << endl;
+
+    // 不允许的广告行业
+    for (long i = 0; i < bidrequest.excluded_product_category_size(); i++) {
+        long category = bidrequest.excluded_product_category(i);
+        cout << "excluded_product_category = " << category << endl;
+    }
+
+    // 商店下载地址
+    const char *store_url = bidrequest.url().c_str();
+    cout << "url = " << store_url << endl;
+
+    // 地理位置
+    BidRequest_Geo geo = bidrequest.user_geo_info();
+    if (geo.user_coordinate_size() > 0) {
+        // 转换火星坐标系
+        long latitude = geo.user_coordinate(0).latitude();
+        long longitude = geo.user_coordinate(0).longitude();
+        cout << "geo -> latitude = " << latitude << endl;
+        cout << "geo -> longitude = " << longitude << endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+int buffer_parse(char *str) 
+{
+    if (!str || !(*str))
+        return -1;
+
+    int len = strlen(str);
+    if (len <= 23) return -1;
+
+    if (str[0] == '['
+            && str[19] == 'D'
+            && str[20] == 'B'
+            && str[21] == 'G'
+            && str[22] == ']')
+        return 0;
+    return -1;
+}
+
+int main(int argc, char *argv[])
+{
+    char *buffer = (char *)malloc(200000000);
+    FILE *fp = fopen("./baidu.log", "r");
+    int size = fread(buffer, 1, 200000000, fp);
+
+    int index = 0;
+    char temp[4096];
+    for (int i = 0; i < size; i++) {
+
+        char *str = &buffer[i];
+        if (buffer_parse(str) == 0) {
+
+            if (index > 0) baidu_request_parse(temp, index - 1);
+            index = 0;
+            i += 22;
+
+        } else {
+            temp[index++] = *str;
+        }
+    }
+
+    return 0;
+}
+
+
+
+
